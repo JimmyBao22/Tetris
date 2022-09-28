@@ -21,9 +21,17 @@ public final class TetrisPiece implements Piece {
      * the runner code and testing code.
      */
 
-    private static Point[] rotateClockwise(Point[] points) {
-        // TODO
-        return null;
+    private static Point[] rotateClockwise(Point[] points, int width, int height) {
+        int pointsLength = points.length;
+        Point[] rotatedPoints = new Point[pointsLength];
+
+        // for each point, translate it to the origin, rotate it, then translate it back
+        for (int i = 0; i < pointsLength; i++) {
+            double translatedY = (points[i].getY() - width / 2.0);
+            double translatedX = (points[i].getX() - height / 2.0);
+            rotatedPoints[i] = new Point((int)(translatedY + width / 2.0), (int)(-translatedX + height / 2.0));
+        }
+        return rotatedPoints;
     }
 
     private static final Map<PieceType, List<Piece>> rotationComputations = new HashMap<PieceType, List<Piece>>();
@@ -35,7 +43,9 @@ public final class TetrisPiece implements Piece {
 
             for (int i = 0; i < 3; i++) {
                 // rotate the previous one and add it to the list as a new piece
-                rotations.add(new TetrisPiece(pt, i + 1, rotateClockwise(rotations.get(i).getBody())));
+                Piece previous = rotations.get(i);
+                Point[] newBody = rotateClockwise(previous.getBody(), previous.getWidth(), previous.getHeight());
+                rotations.add(new TetrisPiece(pt, i + 1, newBody));
             }
 
             rotationComputations.put(pt, rotations);
