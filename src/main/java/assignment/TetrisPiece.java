@@ -1,6 +1,7 @@
 package assignment;
 
-import java.awt.*;
+import java.awt.Point;
+import java.util.*;
 
 /**
  * An immutable representation of a tetris piece in a particular rotation.
@@ -20,58 +21,99 @@ public final class TetrisPiece implements Piece {
      * the runner code and testing code.
      */
 
-    PieceType type;
-    int rotationIndex;
+    private static Point[] rotateClockwise(Point[] points) {
+        // TODO
+        return null;
+    }
+
+    private static final Map<PieceType, List<Piece>> rotationComputations = new HashMap<PieceType, List<Piece>>();
+    static {
+        for (PieceType pt : PieceType.values()) {
+            List<Piece> rotations = new ArrayList<Piece>();
+            // initial body
+            rotations.add(new TetrisPiece(pt, 0, pt.getSpawnBody()));
+
+            for (int i = 0; i < 3; i++) {
+                // rotate the previous one and add it to the list as a new piece
+                rotations.add(new TetrisPiece(pt, i + 1, rotateClockwise(rotations.get(i).getBody())));
+            }
+
+            rotationComputations.put(pt, rotations);
+        }
+    }
+
+    private final PieceType type;
+    private final int rotationIndex;
+    private final Point[] body;
+    private final int[] skirt;
 
     public TetrisPiece(PieceType type) {
+        this(type, 0);
+    }
+
+    private TetrisPiece(PieceType type, int rotationIndex) {
         this.type = type;
-        rotationIndex = 0;
+        this.rotationIndex = rotationIndex;
+        this.body = rotationComputations.get(type).get(rotationIndex).getBody();
+        this.skirt = rotationComputations.get(type).get(rotationIndex).getSkirt();
+    }
+
+    private TetrisPiece(PieceType type, int rotationIndex, Point[] body) {
+        this.type = type;
+        this.rotationIndex = rotationIndex;
+        this.body = body;
+        this.skirt = new int[getWidth()];
+        Arrays.fill(this.skirt, Integer.MAX_VALUE);
+
+        for (Point p : body) {
+            int x = (int) (p.getX());
+            int y = (int) (p.getY());
+            this.skirt[x] = Math.min(this.skirt[x], y);
+        }
     }
 
     @Override
     public PieceType getType() {
-        return type;
+        return this.type;
     }
 
     @Override
     public int getRotationIndex() {
-        return rotationIndex;
+        return this.rotationIndex;
     }
 
     @Override
     public Piece clockwisePiece() {
-        // TODO: Implement me.
-        return null;
+        // move one forwards in the list of rotations, wrapping around if needed
+        int newRotationIndex = (rotationIndex + 1) % (rotationComputations.get(type).size());
+        return rotationComputations.get(type).get(newRotationIndex);
     }
 
     @Override
     public Piece counterclockwisePiece() {
-        // TODO: Implement me.
-        return null;
+        // move one backwards in the list of rotations, wrapping around if needed
+        int newRotationIndex = (rotationIndex - 1 + rotationComputations.get(type).size()) % (rotationComputations.get(type).size());
+        return rotationComputations.get(type).get(newRotationIndex);
     }
 
     @Override
     public int getWidth() {
-        // TODO: Implement me.
-        return -1;
+        return (int) (this.type.getBoundingBox().getWidth());
     }
 
     @Override
     public int getHeight() {
-        // TODO: Implement me.
-        return -1;
+        return (int) (this.type.getBoundingBox().getHeight());
     }
 
     @Override
     public Point[] getBody() {
-        // TODO: Implement me.
-        return null;
+        return this.body;
     }
 
     @Override
     public int[] getSkirt() {
-        // TODO: Implement me.
-        return null;
+        return this.skirt;
     }
 
     @Override
@@ -80,7 +122,6 @@ public final class TetrisPiece implements Piece {
         if(!(other instanceof TetrisPiece)) return false;
         TetrisPiece otherPiece = (TetrisPiece) other;
 
-        // TODO: Implement me.
-        return false;
+        return (this.getType() == otherPiece.getType()) && (this.getRotationIndex() == otherPiece.getRotationIndex());
     }
 }
