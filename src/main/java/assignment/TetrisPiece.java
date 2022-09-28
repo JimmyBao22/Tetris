@@ -61,6 +61,7 @@ public final class TetrisPiece implements Piece {
         this(type, 0);
     }
 
+    // Utilized for lookup
     private TetrisPiece(PieceType type, int rotationIndex) {
         this.type = type;
         this.rotationIndex = rotationIndex;
@@ -68,6 +69,7 @@ public final class TetrisPiece implements Piece {
         this.skirt = rotationComputations.get(type).get(rotationIndex).getSkirt();
     }
 
+    // Utilized for precomputing the tetris piece
     private TetrisPiece(PieceType type, int rotationIndex, Point[] body) {
         this.type = type;
         this.rotationIndex = rotationIndex;
