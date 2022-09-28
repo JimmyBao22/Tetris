@@ -19,20 +19,23 @@ public final class TetrisPiece implements Piece {
      * You may freely add additional constructors, but please leave this one - it is used both in
      * the runner code and testing code.
      */
+
+    PieceType type;
+    int rotationIndex;
+
     public TetrisPiece(PieceType type) {
-        // TODO: Implement me.
+        this.type = type;
+        rotationIndex = 0;
     }
 
     @Override
     public PieceType getType() {
-        // TODO: Implement me.
-        return null;
+        return type;
     }
 
     @Override
     public int getRotationIndex() {
-        // TODO: Implement me.
-        return -1;
+        return rotationIndex;
     }
 
     @Override
