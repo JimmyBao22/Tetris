@@ -56,7 +56,9 @@ public final class TetrisBoard implements Board {
 
     @Override
     public Board testMove(Action act) {
-        Board newBoard =
+        Board newBoard = new TetrisBoard(this);
+        newBoard.move(act);
+        return newBoard;
     }
 
     @Override
