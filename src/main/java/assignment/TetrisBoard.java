@@ -1,6 +1,7 @@
 package assignment;
 
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * Represents a Tetris board -- essentially a 2D grid of piece types (or nulls). Supports
@@ -12,7 +13,7 @@ public final class TetrisBoard implements Board {
     // JTetris will use this constructor
 
     private int width, height, maxHeight, rowsCleared;
-    private boolean[][] board;
+    private Piece[][] board;
     private int[] blocksFilledPerRow, blocksFilledPerColumn;
     private Action lastAction;
     private Result lastResult;
@@ -25,9 +26,24 @@ public final class TetrisBoard implements Board {
         maxHeight = 0;
         rowsCleared = 0;
         // board[i][j] is true if it is filled. Otherwise, it is false
-        board = new boolean[height][width];
+        board = new Piece[width][height];
         blocksFilledPerRow = new int[height];
         blocksFilledPerColumn = new int[width];
+    }
+
+    // Create this board by cloning an old one
+    public TetrisBoard(TetrisBoard oldBoard) {
+        this.width = oldBoard.getWidth();
+        this.height = oldBoard.getHeight();
+        this.maxHeight = oldBoard.getMaxHeight();
+        this.rowsCleared = oldBoard.getRowsCleared();
+        this.board = new Piece[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                board[i][j] = oldBoard.board[i][j];
+            }
+        }
+        this.blocksFilledPerRow = Arrays.copyOf();
     }
 
     @Override
@@ -39,7 +55,9 @@ public final class TetrisBoard implements Board {
     }
 
     @Override
-    public Board testMove(Action act) { return null; }
+    public Board testMove(Action act) {
+        Board newBoard =
+    }
 
     @Override
     public Piece getCurrentPiece() { return this.currentPiece; }
@@ -52,19 +70,27 @@ public final class TetrisBoard implements Board {
     @Override
     public void nextPiece(Piece p, Point spawnPosition) {
         Point[] body = p.getBody();
+        // make sure the piece is in bounds and does not intersect
         for (int i = 0; i < body.length; i++) {
             int currentPointX = (int)(spawnPosition.getX() + body[i].getX());
             int currentPointY = (int)(spawnPosition.getY() + body[i].getY());
 
             // point is out of bounds
             if (currentPointX >= width || currentPointX < 0 || currentPointY >= height || currentPointY < 0) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Piece is out of bounds");
             }
 
             // point is already occupied
-            if (board[currentPointX][currentPointY]) {
-                throw new IllegalArgumentException();
+            if (board[currentPointX][currentPointY] != null) {
+                throw new IllegalArgumentException("Piece intersects with existing piece");
             }
+        }
+
+        // place the piece if all preconditions are passed
+        for (int i = 0; i < body.length; i++) {
+            int x = (int) (spawnPosition.getX() + body[i].getX());
+            int y = (int) (spawnPosition.getY() + body[i].getY());
+            this.board[x][y] = p;
         }
     }
 
@@ -77,12 +103,14 @@ public final class TetrisBoard implements Board {
         // TODO make this faster?
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if (this.board[i][j] != otherBoard.board[i][j]) {
+                if (!this.board[i][j].equals(otherBoard.board[i][j])) {
                     return false;
                 }
             }
         }
-        return true;
+
+        // ensure they have the same current piece at the same location
+        return (this.getCurrentPiece().equals(otherBoard.getCurrentPiece())) && (this.getCurrentPiecePosition().equals(otherBoard.getCurrentPiecePosition()));
     }
 
     @Override
@@ -105,13 +133,12 @@ public final class TetrisBoard implements Board {
 
     @Override
     public int dropHeight(Piece piece, int x) {
-        // TODO try to increase speed
         int[] skirt = piece.getSkirt();
         // TODO asked about x on piazza
         int height = 0;
         for (int i = 0; i < skirt.length; i++) {
             if (skirt[i] != Integer.MAX_VALUE) {
-                height = Math.max(getColumnHeight(x + i) + skirt[i], height);
+                height = Math.max(getColumnHeight(x + i) - skirt[i], height);
             }
         }
         return height;
@@ -128,5 +155,11 @@ public final class TetrisBoard implements Board {
     }
 
     @Override
-    public Piece.PieceType getGrid(int x, int y) { return null; }
+    public Piece.PieceType getGrid(int x, int y) {
+        if (x < 0 || y < 0 || x >= getWidth() || y >= getHeight() || this.board[x][y] == null || this.board[x][y].equals(currentPiece)) {
+            return null;
+        } else {
+            return this.board[x][y].getType();
+        }
+    }
 }
