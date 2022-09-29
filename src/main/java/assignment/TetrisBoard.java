@@ -23,12 +23,12 @@ public final class TetrisBoard implements Board {
     public TetrisBoard(int width, int height) {
         this.width = width;
         this.height = height;
-        maxHeight = 0;
-        rowsCleared = 0;
+        this.maxHeight = 0;
+        this.rowsCleared = 0;
         // board[i][j] is true if it is filled. Otherwise, it is false
-        board = new Piece[width][height];
-        blocksFilledPerRow = new int[height];
-        blocksFilledPerColumn = new int[width];
+        this.board = new Piece[width][height];
+        this.blocksFilledPerRow = new int[height];
+        this.blocksFilledPerColumn = new int[width];
     }
 
     // Create this board by cloning an old one
@@ -37,13 +37,20 @@ public final class TetrisBoard implements Board {
         this.height = oldBoard.getHeight();
         this.maxHeight = oldBoard.getMaxHeight();
         this.rowsCleared = oldBoard.getRowsCleared();
-        this.board = new Piece[width][height];
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                board[i][j] = oldBoard.board[i][j];
+        this.board = new Piece[this.width][this.height];
+        for (int i = 0; i < this.width; i++) {
+            for (int j = 0; j < this.height; j++) {
+                this.board[i][j] = oldBoard.board[i][j];
             }
         }
-        this.blocksFilledPerRow = Arrays.copyOf();
+        this.blocksFilledPerRow = new int[this.height];
+        for (int i = 0; i < this.height; i++) {
+            this.blocksFilledPerRow[i] = oldBoard.getRowWidth(i);
+        }
+        this.blocksFilledPerColumn = new int[this.width];
+        for (int i = 0; i < this.width; i++) {
+            this.blocksFilledPerColumn[i] = oldBoard.getColumnHeight(i);
+        }
     }
 
     @Override
