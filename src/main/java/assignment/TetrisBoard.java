@@ -12,6 +12,7 @@ public final class TetrisBoard implements Board {
 
     // JTetris will use this constructor
 
+    // TODO update all the variables like maxheight, blocksfilledperrow, etc
     private int width, height, maxHeight, rowsCleared;
     private Piece[][] board;
     private int[] blocksFilledPerRow, blocksFilledPerColumn;
@@ -74,7 +75,7 @@ public final class TetrisBoard implements Board {
                 newPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - 1);
                 movePieceToNewPosition(body, newPosition);
                 // piece has been placed
-                if (dropHeight(currentPiece, (int)(currentPosition.getY())) == 0) {
+                if (dropHeight(currentPiece, (int)(currentPosition.getY())) == currentPosition.getY()) {
                     lastResult = Result.PLACE;
                 }
                 break;
@@ -83,7 +84,7 @@ public final class TetrisBoard implements Board {
                 newPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - height);
                 movePieceToNewPosition(body, newPosition);
                 // piece has been placed
-                if (dropHeight(currentPiece, (int)(currentPosition.getY())) == 0) {
+                if (dropHeight(currentPiece, (int)(currentPosition.getY())) == currentPosition.getY()) {
                     lastResult = Result.PLACE;
                 }
                 break;
