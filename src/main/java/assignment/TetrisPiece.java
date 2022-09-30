@@ -44,7 +44,7 @@ public final class TetrisPiece implements Piece {
             for (int i = 0; i < 3; i++) {
                 // rotate the previous one and add it to the list as a new piece
                 Piece previous = rotations.get(i);
-                Point[] newBody = rotateClockwise(previous.getBody(), previous.getWidth(), previous.getHeight());
+                Point[] newBody = rotateClockwise(previous.getBody(), previous.getWidth() - 1, previous.getHeight() - 1);
                 rotations.add(new TetrisPiece(pt, i + 1, newBody));
             }
 

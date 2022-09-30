@@ -88,8 +88,10 @@ public final class TetrisBoard implements Board {
                 }
                 break;
             case CLOCKWISE:
+                lastResult = Result.OUT_BOUNDS;
                 break;
             case COUNTERCLOCKWISE:
+                lastResult = Result.OUT_BOUNDS;
                 break;
             case HOLD:
                 lastResult = Result.SUCCESS;
@@ -231,7 +233,7 @@ public final class TetrisBoard implements Board {
             // column height at that index
         int height = 0;
         for (int i = 0; i < skirt.length; i++) {
-            if (skirt[i] != Integer.MAX_VALUE) {
+            if (skirt[i] != Integer.MAX_VALUE && x + i < this.width) {
                 height = Math.max(getColumnHeight(x + i) - skirt[i], height);
             }
         }
