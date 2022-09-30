@@ -177,12 +177,12 @@ public final class TetrisBoard implements Board {
             int currentPointY = (int)(position.getY() + body[i].getY());
 
             // point is out of bounds
-            if (currentPointX >= width || currentPointX < 0 || currentPointY >= height || currentPointY < 0) {
+            if (outOfBounds(currentPointX, currentPointY)) {
                 return 1;
             }
 
-            // point is already occupied
-            if (board[currentPointX][currentPointY] != null) {
+            // point is already occupied by a piece (excluding the current piece)
+            if (getGrid(currentPointX, currentPointY) != null) {
                 return 2;
             }
         }
@@ -233,7 +233,7 @@ public final class TetrisBoard implements Board {
             // column height at that index
         int height = 0;
         for (int i = 0; i < skirt.length; i++) {
-            if (skirt[i] != Integer.MAX_VALUE && x + i < this.width) {
+            if (skirt[i] != Integer.MAX_VALUE && x + i < width) {
                 height = Math.max(getColumnHeight(x + i) - skirt[i], height);
             }
         }
@@ -252,10 +252,14 @@ public final class TetrisBoard implements Board {
 
     @Override
     public Piece.PieceType getGrid(int x, int y) {
-        if (x < 0 || y < 0 || x >= getWidth() || y >= getHeight() || this.board[x][y] == null || this.board[x][y].equals(currentPiece)) {
+        if (outOfBounds(x, y) || this.board[x][y] == null || this.board[x][y].equals(currentPiece)) {
             return null;
         } else {
             return this.board[x][y].getType();
         }
+    }
+
+    private boolean outOfBounds(int x, int y) {
+        return x < 0 || y < 0 || x >= getWidth() || y >= getHeight();
     }
 }
