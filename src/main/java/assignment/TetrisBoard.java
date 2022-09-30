@@ -26,7 +26,6 @@ public final class TetrisBoard implements Board {
         this.height = height;
         this.maxHeight = 0;
         this.rowsCleared = 0;
-        // board[i][j] is true if it is filled. Otherwise, it is false
         this.board = new Piece[width][height];
         this.blocksFilledPerRow = new int[height];
         this.blocksFilledPerColumn = new int[width];
@@ -78,6 +77,8 @@ public final class TetrisBoard implements Board {
                 break;
             case DROP:
                 int height = dropHeight(currentPiece, (int)(currentPosition.getY()));
+                System.out.println(height);
+                System.out.println(currentPosition.getY() - height);
                 newPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - height);
                 movePieceToNewPosition(body, newPosition);
                 checkIfPiecePlaced(body);
