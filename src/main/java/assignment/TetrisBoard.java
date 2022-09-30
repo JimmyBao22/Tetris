@@ -1,7 +1,6 @@
 package assignment;
 
 import java.awt.*;
-import java.util.Arrays;
 
 /**
  * Represents a Tetris board -- essentially a 2D grid of piece types (or nulls). Supports
@@ -12,6 +11,8 @@ public final class TetrisBoard implements Board {
 
     // JTetris will use this constructor
 
+    // TODO some kind of issue where only square pieces actually hit the bottom, the rest stay floating one above
+    // skirt issue?
     // TODO update and implement rows cleared
     private int width, height, maxHeight, rowsCleared;
     private Piece[][] board;
@@ -57,8 +58,10 @@ public final class TetrisBoard implements Board {
     public Result move(Action act) {
         // TODO implement and set lastResult to the returned result
         if (currentPiece == null) {
-            return lastResult = Result.NO_PIECE;
+            lastResult = Result.NO_PIECE;
+            return lastResult;
         }
+
         Point[] body = currentPiece.getBody();
         Point newPosition;
         switch (act) {
@@ -77,9 +80,7 @@ public final class TetrisBoard implements Board {
                 break;
             case DROP:
                 // TODO can't use dropheight ever because of a cave
-                int height = dropHeight(currentPiece, (int)(currentPosition.getY()));
-                System.out.println(height);
-                System.out.println(currentPosition.getY() - height);
+                int height = dropHeight(currentPiece, (int)(currentPosition.getX()));
                 newPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - height);
                 movePieceToNewPosition(body, newPosition);
                 checkIfPiecePlaced(body);
@@ -106,12 +107,13 @@ public final class TetrisBoard implements Board {
     // check if the piece can be placed
     private void checkIfPiecePlaced(Point[] body) {
         // TODO instead of dropheight, check if can move 1 down bc of caves
-        if (dropHeight(currentPiece, (int)(currentPosition.getY())) == currentPosition.getY()) {
+        if (dropHeight(currentPiece, (int)(currentPosition.getX())) == currentPosition.getY()) {
             updateInstanceVariables(body);
             lastResult = Result.PLACE;
         }
     }
 
+    // TODO dont name this method like this, extremely ambiguous
     // updates the instance variables for max height and blocks filled per column/row
     private void updateInstanceVariables(Point[] body) {
         for (int i = 0; i < body.length; i++) {
@@ -269,9 +271,25 @@ public final class TetrisBoard implements Board {
         return this.blocksFilledPerRow[y];
     }
 
+    // determine whether a point is on the current piece
+    private boolean isPointOnCurrentPiece(Point toCheck) {
+        if (currentPiece == null || currentPosition == null || toCheck == null) {
+            return false;
+        }
+
+        for (Point p : currentPiece.getBody()) {
+            Point realCurrentPoint = new Point((int) (p.getX() + currentPosition.getX()), (int) (p.getY() + currentPosition.getY()));
+            if (realCurrentPoint.equals(toCheck)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public Piece.PieceType getGrid(int x, int y) {
-        if (outOfBounds(x, y) || this.board[x][y] == null || this.board[x][y].equals(currentPiece)) {
+        if (outOfBounds(x, y) || this.board[x][y] == null || isPointOnCurrentPiece(new Point(x, y))) {
             return null;
         } else {
             return this.board[x][y].getType();
