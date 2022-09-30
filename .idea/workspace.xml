@@ -132,7 +132,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664512018164</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Debugging">
+      <created>1664513041740</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1664513041740</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -155,6 +162,7 @@
     <MESSAGE value="Created functions to decrease repetition, and fixed some bugs" />
     <MESSAGE value="Removed some bugs and added todo" />
     <MESSAGE value="Implemented the update of instance variables" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented the update of instance variables" />
+    <MESSAGE value="Debugging" />
+    <option name="LAST_COMMIT_MESSAGE" value="Debugging" />
   </component>
 </project>

@@ -76,6 +76,7 @@ public final class TetrisBoard implements Board {
                 checkIfPiecePlaced(body);
                 break;
             case DROP:
+                // TODO can't use dropheight ever because of a cave
                 int height = dropHeight(currentPiece, (int)(currentPosition.getY()));
                 System.out.println(height);
                 System.out.println(currentPosition.getY() - height);
@@ -104,6 +105,7 @@ public final class TetrisBoard implements Board {
 
     // check if the piece can be placed
     private void checkIfPiecePlaced(Point[] body) {
+        // TODO instead of dropheight, check if can move 1 down bc of caves
         if (dropHeight(currentPiece, (int)(currentPosition.getY())) == currentPosition.getY()) {
             updateInstanceVariables(body);
             lastResult = Result.PLACE;
