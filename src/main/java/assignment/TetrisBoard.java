@@ -12,7 +12,7 @@ public final class TetrisBoard implements Board {
 
     // JTetris will use this constructor
 
-    // TODO update all the variables like maxheight, blocksfilledperrow, etc
+    // TODO update and implement rows cleared
     private int width, height, maxHeight, rowsCleared;
     private Piece[][] board;
     private int[] blocksFilledPerRow, blocksFilledPerColumn;
@@ -74,24 +74,20 @@ public final class TetrisBoard implements Board {
             case DOWN:
                 newPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - 1);
                 movePieceToNewPosition(body, newPosition);
-                // piece has been placed
-                if (dropHeight(currentPiece, (int)(currentPosition.getY())) == currentPosition.getY()) {
-                    lastResult = Result.PLACE;
-                }
+                checkIfPiecePlaced(body);
                 break;
             case DROP:
                 int height = dropHeight(currentPiece, (int)(currentPosition.getY()));
                 newPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - height);
                 movePieceToNewPosition(body, newPosition);
-                // piece has been placed
-                if (dropHeight(currentPiece, (int)(currentPosition.getY())) == currentPosition.getY()) {
-                    lastResult = Result.PLACE;
-                }
+                checkIfPiecePlaced(body);
                 break;
             case CLOCKWISE:
+                // TODO
                 lastResult = Result.OUT_BOUNDS;
                 break;
             case COUNTERCLOCKWISE:
+                // TODO
                 lastResult = Result.OUT_BOUNDS;
                 break;
             case HOLD:
@@ -103,6 +99,25 @@ public final class TetrisBoard implements Board {
         }
         lastAction = act;
         return lastResult;
+    }
+
+    // check if the piece can be placed
+    private void checkIfPiecePlaced(Point[] body) {
+        if (dropHeight(currentPiece, (int)(currentPosition.getY())) == currentPosition.getY()) {
+            updateInstanceVariables(body);
+            lastResult = Result.PLACE;
+        }
+    }
+
+    // updates the instance variables for max height and blocks filled per column/row
+    private void updateInstanceVariables(Point[] body) {
+        for (int i = 0; i < body.length; i++) {
+            int x = (int) (currentPosition.getX() + body[i].getX());
+            int y = (int) (currentPosition.getY() + body[i].getY());
+            blocksFilledPerColumn[x] = Math.max(getColumnHeight(x), y + 1);
+            maxHeight = Math.max(getMaxHeight(), y + 1);
+            blocksFilledPerRow[y]++;
+        }
     }
 
     // moves the piece to the new position if applicable, and sets the result
@@ -164,7 +179,7 @@ public final class TetrisBoard implements Board {
         for (int i = 0; i < body.length; i++) {
             int x = (int) (position.getX() + body[i].getX());
             int y = (int) (position.getY() + body[i].getY());
-            this.board[x][y] = p;
+            board[x][y] = p;
         }
     }
 
