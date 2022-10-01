@@ -80,7 +80,25 @@ public final class TetrisBoard implements Board {
                 break;
             case DROP:
                 // TODO can't use dropheight ever because of a cave
-                int height = dropHeight(currentPiece, (int)(currentPosition.getX()));
+                // int height = dropHeight(currentPiece, (int)(currentPosition.getX()));
+                int height = this.height;
+                int[] skirt = currentPiece.getSkirt();;
+                for (int i = 0; i < skirt.length; i++) {
+                    // check how far down you need to go at this index
+                    if (skirt[i] != Integer.MAX_VALUE) {
+                        int x = (int) (currentPosition.getX() + i);
+                        int y = (int) (currentPosition.getY() + skirt[i]);
+
+                        for (int j = y; j >= 0; j--) {
+                            if (getGrid(x, j) != null) {
+                                // there exists a piece at this index (x, j), therefore can move it to height j+1
+                                height = Math.min(height, y - (j + 1));
+                                break;
+                            }
+                        }
+                    }
+                }
+
                 newPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - height);
                 movePieceToNewPosition(body, newPosition);
                 checkIfPiecePlaced(body);
@@ -107,7 +125,13 @@ public final class TetrisBoard implements Board {
     // check if the piece can be placed
     private void checkIfPiecePlaced(Point[] body) {
         // TODO instead of dropheight, check if can move 1 down bc of caves
-        if (dropHeight(currentPiece, (int)(currentPosition.getX())) == currentPosition.getY()) {
+//        if (dropHeight(currentPiece, (int)(currentPosition.getX())) == currentPosition.getY()) {
+//            updateInstanceVariables(body);
+//            lastResult = Result.PLACE;
+//        }
+        Point checkPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - 1);
+        if (checkPiece(currentPiece, checkPosition) != 0) {
+            // cannot move the piece down 1
             updateInstanceVariables(body);
             lastResult = Result.PLACE;
         }
@@ -216,7 +240,6 @@ public final class TetrisBoard implements Board {
         if(!(other instanceof TetrisBoard)) return false;
         TetrisBoard otherBoard = (TetrisBoard) other;
 
-        // TODO make this faster?
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (!this.board[i][j].equals(otherBoard.board[i][j])) {
