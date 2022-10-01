@@ -79,27 +79,8 @@ public final class TetrisBoard implements Board {
                 checkIfPiecePlaced(body);
                 break;
             case DROP:
-                // TODO can't use dropheight ever because of a cave
-                // int height = dropHeight(currentPiece, (int)(currentPosition.getX()));
-                int height = this.height;
-                int[] skirt = currentPiece.getSkirt();;
-                for (int i = 0; i < skirt.length; i++) {
-                    // check how far down you need to go at this index
-                    if (skirt[i] != Integer.MAX_VALUE) {
-                        int x = (int) (currentPosition.getX() + i);
-                        int y = (int) (currentPosition.getY() + skirt[i]);
-
-                        for (int j = y; j >= 0; j--) {
-                            if (getGrid(x, j) != null) {
-                                // there exists a piece at this index (x, j), therefore can move it to height j+1
-                                height = Math.min(height, y - (j + 1));
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                newPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - height);
+                int height = dropHeight(currentPiece, (int)(currentPosition.getX()));
+                newPosition = new Point((int)(currentPosition.getX()), height);
                 movePieceToNewPosition(body, newPosition);
                 checkIfPiecePlaced(body);
                 break;
@@ -125,16 +106,18 @@ public final class TetrisBoard implements Board {
     // check if the piece can be placed
     private void checkIfPiecePlaced(Point[] body) {
         // TODO instead of dropheight, check if can move 1 down bc of caves
-//        if (dropHeight(currentPiece, (int)(currentPosition.getX())) == currentPosition.getY()) {
-//            updateInstanceVariables(body);
-//            lastResult = Result.PLACE;
-//        }
-        Point checkPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - 1);
-        if (checkPiece(currentPiece, checkPosition) != 0) {
-            // cannot move the piece down 1
+        if (dropHeight(currentPiece, (int)(currentPosition.getX())) == (int)(currentPosition.getY())) {
             updateInstanceVariables(body);
             lastResult = Result.PLACE;
         }
+
+        // checks if the piece can be moved 1 point down. If it cannot, then we cannot move the piece down
+//        Point checkPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - 1);
+//        if (checkPiece(currentPiece, checkPosition) != 0) {
+//            // cannot move the piece down 1
+//            updateInstanceVariables(body);
+//            lastResult = Result.PLACE;
+//        }
     }
 
     // TODO dont name this method like this, extremely ambiguous
@@ -272,16 +255,34 @@ public final class TetrisBoard implements Board {
 
     @Override
     public int dropHeight(Piece piece, int x) {
-        int[] skirt = piece.getSkirt();
-        // iterate over skirt array. The drop height will depend on each element in the skirt array with the respective
-            // column height at that index
-        int height = 0;
+        int dropY = 0;
+        int[] skirt = piece.getSkirt();;
         for (int i = 0; i < skirt.length; i++) {
-            if (skirt[i] != Integer.MAX_VALUE && x + i < width) {
-                height = Math.max(getColumnHeight(x + i) - skirt[i], height);
+            // The drop height will depend on each element in the skirt array with the respective
+                // height the piece needs to go down at this index
+            if (skirt[i] != Integer.MAX_VALUE) {
+                int y = (int) (currentPosition.getY() + skirt[i]);
+
+                for (int j = y; j >= 0; j--) {
+                    if (getGrid(x + i, j) != null) {
+                        // there exists a piece at this index (x, j), therefore can move it to height j+1
+                        dropY = Math.max(dropY, j + 1 - skirt[i]);
+                        break;
+                    }
+                }
             }
         }
-        return height;
+        return dropY;
+//        int[] skirt = piece.getSkirt();
+//        // iterate over skirt array. The drop height will depend on each element in the skirt array with the respective
+//            // column height at that index
+//        int height = 0;
+//        for (int i = 0; i < skirt.length; i++) {
+//            if (skirt[i] != Integer.MAX_VALUE && x + i < width) {
+//                height = Math.max(getColumnHeight(x + i) - skirt[i], height);
+//            }
+//        }
+//        return height;
     }
 
     @Override
