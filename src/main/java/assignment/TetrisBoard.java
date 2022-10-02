@@ -103,11 +103,40 @@ public final class TetrisBoard implements Board {
         return lastResult;
     }
 
+    private void clearRows() {
+        for (int i = currentPiece.getHeight() - 1; i >= 0; i--) {
+            int y = (int)(currentPosition.getY() + i);
+            // check if this row is cleared by checking if the number of blocks filled equals the width
+                // of the board
+            if (y >= 0 && getRowWidth(y) == getWidth()) {
+                // clear this row
+                for (int x = 0; x < getWidth(); x++) {
+                    if (getGrid(x, y) != null || isPointOnCurrentPiece(new Point(x, y))) {
+                        // shift pieces on top of this block down
+                        blocksFilledPerColumn[x]--;
+                        for (int j = y + 1; j <= getHeight(); j++) {
+                            if (j == getHeight()) {
+                                blocksFilledPerRow[j-1] = 0;
+                                board[x][j - 1] = null;
+                            } else {
+                                blocksFilledPerRow[j-1] = blocksFilledPerRow[j];
+                                board[x][j - 1] = board[x][j];
+                            }
+                            if (getGrid(x, y) == null) break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     // check if the piece can be placed
     private void checkIfPiecePlaced(Point[] body) {
-        // TODO instead of dropheight, check if can move 1 down bc of caves
+        // checks if the drop height of the piece already equals the current piece's location. If it does,
+            // that means the piece is placed.
         if (dropHeight(currentPiece, (int)(currentPosition.getX())) == (int)(currentPosition.getY())) {
             updateInstanceVariables(body);
+            clearRows();
             lastResult = Result.PLACE;
         }
 
@@ -116,6 +145,7 @@ public final class TetrisBoard implements Board {
 //        if (checkPiece(currentPiece, checkPosition) != 0) {
 //            // cannot move the piece down 1
 //            updateInstanceVariables(body);
+//            clearRows();
 //            lastResult = Result.PLACE;
 //        }
     }
@@ -273,16 +303,6 @@ public final class TetrisBoard implements Board {
             }
         }
         return dropY;
-//        int[] skirt = piece.getSkirt();
-//        // iterate over skirt array. The drop height will depend on each element in the skirt array with the respective
-//            // column height at that index
-//        int height = 0;
-//        for (int i = 0; i < skirt.length; i++) {
-//            if (skirt[i] != Integer.MAX_VALUE && x + i < width) {
-//                height = Math.max(getColumnHeight(x + i) - skirt[i], height);
-//            }
-//        }
-//        return height;
     }
 
     @Override
