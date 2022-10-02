@@ -85,12 +85,10 @@ public final class TetrisBoard implements Board {
                 checkIfPiecePlaced(body);
                 break;
             case CLOCKWISE:
-                // TODO
-                lastResult = Result.OUT_BOUNDS;
+                rotateCurrentPiece(true);
                 break;
             case COUNTERCLOCKWISE:
-                // TODO
-                lastResult = Result.OUT_BOUNDS;
+                rotateCurrentPiece(false);
                 break;
             case HOLD:
                 lastResult = Result.SUCCESS;
@@ -101,6 +99,42 @@ public final class TetrisBoard implements Board {
         }
         lastAction = act;
         return lastResult;
+    }
+
+    private void rotateCurrentPiece(boolean clockwise) {
+        Point[][] wallkickLookup;
+        if (currentPiece.getType() == Piece.PieceType.STICK) {
+            wallkickLookup = clockwise ? Piece.I_CLOCKWISE_WALL_KICKS : Piece.I_COUNTERCLOCKWISE_WALL_KICKS;
+        } else {
+            wallkickLookup = clockwise ? Piece.NORMAL_CLOCKWISE_WALL_KICKS : Piece.NORMAL_COUNTERCLOCKWISE_WALL_KICKS;
+        }
+
+        // remove the old body
+        setPiece(null, currentPiece.getBody(), currentPosition);
+        int sourceRotationIndex = currentPiece.getRotationIndex();
+
+        // rotate it
+        Piece rotatedPiece = clockwise ? currentPiece.clockwisePiece() : currentPiece.counterclockwisePiece();
+
+        for (Point potentialMovement : wallkickLookup[sourceRotationIndex]) {
+            int newX = (int) (currentPosition.getX() + potentialMovement.getX());
+            int newY = (int) (currentPosition.getY() + potentialMovement.getY());
+
+            Point newPosition = new Point(newX, newY);
+            if (checkPiece(rotatedPiece, newPosition) == 0) {
+                // we found the rotation + translation that works
+                currentPiece = rotatedPiece;
+                currentPosition = newPosition;
+                setPiece(currentPiece, currentPiece.getBody(), currentPosition);
+                lastResult = Result.SUCCESS;
+                return;
+            }
+        }
+
+        // we checked all rotation + translations, none work
+        // put the old body back where it was
+        setPiece(currentPiece, currentPiece.getBody(), currentPosition);
+        lastResult = Result.OUT_BOUNDS;
     }
 
     private void clearRows() {
@@ -262,7 +296,8 @@ public final class TetrisBoard implements Board {
         }
 
         // ensure they have the same current piece at the same location
-        return (this.getCurrentPiece().equals(otherBoard.getCurrentPiece())) && (this.getCurrentPiecePosition().equals(otherBoard.getCurrentPiecePosition()));
+        return this.getCurrentPiece().equals(otherBoard.getCurrentPiece()) &&
+                this.getCurrentPiecePosition().equals(otherBoard.getCurrentPiecePosition());
     }
 
     @Override
@@ -286,7 +321,7 @@ public final class TetrisBoard implements Board {
     @Override
     public int dropHeight(Piece piece, int x) {
         int dropY = 0;
-        int[] skirt = piece.getSkirt();;
+        int[] skirt = piece.getSkirt();
         for (int i = 0; i < skirt.length; i++) {
             // The drop height will depend on each element in the skirt array with the respective
                 // height the piece needs to go down at this index
