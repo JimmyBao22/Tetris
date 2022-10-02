@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="Implemented rotations and wall kicks">
+    <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="Fixed pieces not being placed all the way at the bottom">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" afterDir="false" />
     </list>
@@ -70,7 +70,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664746159800</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Fixed pieces not being placed all the way at the bottom">
+      <created>1664747213175</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1664747213175</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -89,21 +96,7 @@
     <MESSAGE value="Implemented a lot of methods fr" />
     <MESSAGE value="Fixed piece duplication on spawn (checking whether a piece is equal to the current piece does not determine whether the point is on the current piece)" />
     <MESSAGE value="Implemented rotations and wall kicks" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented rotations and wall kicks" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java</url>
-          <line>167</line>
-          <properties class="assignment.TetrisBoard" method="checkIfPiecePlaced">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Fixed pieces not being placed all the way at the bottom" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed pieces not being placed all the way at the bottom" />
   </component>
 </project>

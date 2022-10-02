@@ -101,6 +101,7 @@ public final class TetrisBoard implements Board {
         return lastResult;
     }
 
+    // try to rotate the current piece, set last result to success or out of bounds
     private void rotateCurrentPiece(boolean clockwise) {
         Point[][] wallkickLookup;
         if (currentPiece.getType() == Piece.PieceType.STICK) {
@@ -139,27 +140,29 @@ public final class TetrisBoard implements Board {
 
     private void clearRows() {
         for (int i = currentPiece.getHeight() - 1; i >= 0; i--) {
-            int y = (int)(currentPosition.getY() + i);
-            // check if this row is cleared by checking if the number of blocks filled equals the width
-                // of the board
-            if (y >= 0 && getRowWidth(y) == getWidth()) {
-                // clear this row
+            int y = (int) (currentPosition.getY()) + i;
+            // if this row is full
+            if (y >= 0 && (getRowWidth(y) == getWidth())) {
+                // replace every cell with the contents of the one above
                 for (int x = 0; x < getWidth(); x++) {
-                    if (getGrid(x, y) != null || isPointOnCurrentPiece(new Point(x, y))) {
-                        // shift pieces on top of this block down
-                        blocksFilledPerColumn[x]--;
-                        for (int j = y + 1; j <= getHeight(); j++) {
-                            if (j == getHeight()) {
-                                blocksFilledPerRow[j-1] = 0;
-                                board[x][j - 1] = null;
-                            } else {
-                                blocksFilledPerRow[j-1] = blocksFilledPerRow[j];
-                                board[x][j - 1] = board[x][j];
-                            }
-                            if (getGrid(x, y) == null) break;
-                        }
+                    for (int row = y; row < getHeight() - 1; row++) {
+                        board[x][row] = board[x][row + 1];
                     }
+
+                    // top row is empty now
+                    board[x][getHeight() - 1] = null;
+
+                    // we removed 1 block from each column
+                    blocksFilledPerColumn[x]--;
                 }
+
+                // shift blocks per row counts down by one row
+                for (int row = y; row < getHeight() - 1; row++) {
+                    blocksFilledPerRow[row] = blocksFilledPerRow[row + 1];
+                }
+
+                // no blocks in the top row
+                blocksFilledPerRow[getHeight() - 1] = 0;
             }
         }
     }
