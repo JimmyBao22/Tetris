@@ -320,8 +320,15 @@ public final class TetrisBoard implements Board {
 
     @Override
     public int dropHeight(Piece piece, int x) {
-        int dropY = 0;
         int[] skirt = piece.getSkirt();
+
+        int minSkirt = skirt[0];
+        for (int skirtVal : skirt) {
+            minSkirt = Math.min(skirtVal, minSkirt);
+        }
+
+        int dropY = -minSkirt;
+
         for (int i = 0; i < skirt.length; i++) {
             // The drop height will depend on each element in the skirt array with the respective
                 // height the piece needs to go down at this index
