@@ -83,7 +83,6 @@ public final class TetrisBoard implements Board {
                 newPosition = new Point((int)(currentPosition.getX()), height);
                 // will set lastResult internally
                 movePieceToNewPosition(body, newPosition);
-                // TODO: (question) why do we only do this check in drop and down?
                 checkIfPiecePlaced(body);
                 break;
             case CLOCKWISE:
