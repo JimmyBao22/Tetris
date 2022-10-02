@@ -10,10 +10,6 @@ import java.awt.*;
 public final class TetrisBoard implements Board {
 
     // JTetris will use this constructor
-
-    // TODO some kind of issue where only square pieces actually hit the bottom, the rest stay floating one above
-    // skirt issue?
-    // TODO update and implement rows cleared
     private int width, height, maxHeight, rowsCleared;
     private Piece[][] board;
     private int[] blocksFilledPerRow, blocksFilledPerColumn;
@@ -138,6 +134,7 @@ public final class TetrisBoard implements Board {
         lastResult = Result.OUT_BOUNDS;
     }
 
+    // after the current piece is placed, check the rows it is a part of and clear them as needed
     private void clearRows() {
         for (int i = currentPiece.getHeight() - 1; i >= 0; i--) {
             int y = (int) (currentPosition.getY()) + i;
@@ -163,6 +160,8 @@ public final class TetrisBoard implements Board {
 
                 // no blocks in the top row
                 blocksFilledPerRow[getHeight() - 1] = 0;
+
+                rowsCleared++;
             }
         }
     }
