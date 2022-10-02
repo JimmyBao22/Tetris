@@ -18,6 +18,7 @@ public final class TetrisBoard implements Board {
     private Piece currentPiece;
     private Point currentPosition;
 
+    // Create an empty TetrisBoard
     public TetrisBoard(int width, int height) {
         this.width = width;
         this.height = height;
@@ -28,7 +29,7 @@ public final class TetrisBoard implements Board {
         this.blocksFilledPerColumn = new int[width];
     }
 
-    // Create this board by cloning an old one
+    // Create a board by cloning an old one
     public TetrisBoard(TetrisBoard oldBoard) {
         this.width = oldBoard.getWidth();
         this.height = oldBoard.getHeight();
@@ -50,9 +51,9 @@ public final class TetrisBoard implements Board {
         }
     }
 
+    // Given an action, update the board and set the result appropriately
     @Override
     public Result move(Action act) {
-        // TODO implement and set lastResult to the returned result
         if (currentPiece == null) {
             lastResult = Result.NO_PIECE;
             return lastResult;
@@ -63,27 +64,34 @@ public final class TetrisBoard implements Board {
         switch (act) {
             case LEFT:
                 newPosition = new Point((int)(currentPosition.getX()) - 1, (int)(currentPosition.getY()));
+                // will set lastResult internally
                 movePieceToNewPosition(body, newPosition);
                 break;
             case RIGHT:
                 newPosition = new Point((int)(currentPosition.getX()) + 1, (int)(currentPosition.getY()));
+                // will set lastResult internally
                 movePieceToNewPosition(body, newPosition);
                 break;
             case DOWN:
                 newPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - 1);
+                // will set lastResult internally
                 movePieceToNewPosition(body, newPosition);
                 checkIfPiecePlaced(body);
                 break;
             case DROP:
                 int height = dropHeight(currentPiece, (int)(currentPosition.getX()));
                 newPosition = new Point((int)(currentPosition.getX()), height);
+                // will set lastResult internally
                 movePieceToNewPosition(body, newPosition);
+                // TODO: (question) why do we only do this check in drop and down?
                 checkIfPiecePlaced(body);
                 break;
             case CLOCKWISE:
+                // will set lastResult internally
                 rotateCurrentPiece(true);
                 break;
             case COUNTERCLOCKWISE:
+                // will set lastResult internally
                 rotateCurrentPiece(false);
                 break;
             case HOLD:
@@ -93,12 +101,14 @@ public final class TetrisBoard implements Board {
                 lastResult = Result.SUCCESS;
                 break;
         }
+
         lastAction = act;
         return lastResult;
     }
 
     // try to rotate the current piece, set last result to success or out of bounds
     private void rotateCurrentPiece(boolean clockwise) {
+        // store which wallkicks to use depending on piece type and rotation direction
         Point[][] wallkickLookup;
         if (currentPiece.getType() == Piece.PieceType.STICK) {
             wallkickLookup = clockwise ? Piece.I_CLOCKWISE_WALL_KICKS : Piece.I_COUNTERCLOCKWISE_WALL_KICKS;
@@ -110,16 +120,17 @@ public final class TetrisBoard implements Board {
         setPiece(null, currentPiece.getBody(), currentPosition);
         int sourceRotationIndex = currentPiece.getRotationIndex();
 
-        // rotate it
+        // store the rotated piece
         Piece rotatedPiece = clockwise ? currentPiece.clockwisePiece() : currentPiece.counterclockwisePiece();
 
+        // try all the wallkick displacements
         for (Point potentialMovement : wallkickLookup[sourceRotationIndex]) {
             int newX = (int) (currentPosition.getX() + potentialMovement.getX());
             int newY = (int) (currentPosition.getY() + potentialMovement.getY());
 
             Point newPosition = new Point(newX, newY);
             if (checkPiece(rotatedPiece, newPosition) == 0) {
-                // we found the rotation + translation that works
+                // we found the rotation + translation that doesn't collide with anything
                 currentPiece = rotatedPiece;
                 currentPosition = newPosition;
                 setPiece(currentPiece, currentPiece.getBody(), currentPosition);
@@ -129,13 +140,14 @@ public final class TetrisBoard implements Board {
         }
 
         // we checked all rotation + translations, none work
-        // put the old body back where it was
+        // put the old body back where it was and report the issue
         setPiece(currentPiece, currentPiece.getBody(), currentPosition);
         lastResult = Result.OUT_BOUNDS;
     }
 
     // after the current piece is placed, check the rows it is a part of and clear them as needed
     private void clearRows() {
+        // check each row of the piece
         for (int i = currentPiece.getHeight() - 1; i >= 0; i--) {
             int y = (int) (currentPosition.getY()) + i;
             // if this row is full
@@ -171,24 +183,14 @@ public final class TetrisBoard implements Board {
         // checks if the drop height of the piece already equals the current piece's location. If it does,
             // that means the piece is placed.
         if (dropHeight(currentPiece, (int)(currentPosition.getX())) == (int)(currentPosition.getY())) {
-            updateInstanceVariables(body);
+            updateBlocksFilledAndMaxHeight(body);
             clearRows();
             lastResult = Result.PLACE;
         }
-
-        // checks if the piece can be moved 1 point down. If it cannot, then we cannot move the piece down
-//        Point checkPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - 1);
-//        if (checkPiece(currentPiece, checkPosition) != 0) {
-//            // cannot move the piece down 1
-//            updateInstanceVariables(body);
-//            clearRows();
-//            lastResult = Result.PLACE;
-//        }
     }
 
-    // TODO dont name this method like this, extremely ambiguous
     // updates the instance variables for max height and blocks filled per column/row
-    private void updateInstanceVariables(Point[] body) {
+    private void updateBlocksFilledAndMaxHeight(Point[] body) {
         for (int i = 0; i < body.length; i++) {
             int x = (int) (currentPosition.getX() + body[i].getX());
             int y = (int) (currentPosition.getY() + body[i].getY());
@@ -218,6 +220,7 @@ public final class TetrisBoard implements Board {
         }
     }
 
+    // return a new board reflecting the current board if an action were to be applied
     @Override
     public Board testMove(Action act) {
         Board newBoard = new TetrisBoard(this);
@@ -233,6 +236,7 @@ public final class TetrisBoard implements Board {
         return this.currentPosition;
     }
 
+    // Put a new piece on the board
     @Override
     public void nextPiece(Piece p, Point spawnPosition) {
         Point[] body = p.getBody();
@@ -283,6 +287,7 @@ public final class TetrisBoard implements Board {
         return 0;
     }
 
+    // determine whether two tetrisboards are equal (same pieces on the board, same current piece and current position)
     @Override
     public boolean equals(Object other) {
         // Ignore objects which aren't also tetris boards.
@@ -320,10 +325,12 @@ public final class TetrisBoard implements Board {
     @Override
     public int getMaxHeight() { return this.maxHeight; }
 
+    // determine the height at which a piece would rest if dropped at in a given column
     @Override
     public int dropHeight(Piece piece, int x) {
         int[] skirt = piece.getSkirt();
 
+        // find the minimum value of the skirt, so that point can be placed at the bottom
         int minSkirt = skirt[0];
         for (int skirtVal : skirt) {
             minSkirt = Math.min(skirtVal, minSkirt);
@@ -337,15 +344,17 @@ public final class TetrisBoard implements Board {
             if (skirt[i] != Integer.MAX_VALUE) {
                 int y = (int) (currentPosition.getY() + skirt[i]);
 
+                // check each cell below the current one in the skirt
                 for (int j = y; j >= 0; j--) {
                     if (getGrid(x + i, j) != null) {
-                        // there exists a piece at this index (x, j), therefore can move it to height j+1
+                        // there exists a piece at this index (x, j), therefore we can move it to height j+1
                         dropY = Math.max(dropY, j + 1 - skirt[i]);
                         break;
                     }
                 }
             }
         }
+
         return dropY;
     }
 
@@ -375,6 +384,7 @@ public final class TetrisBoard implements Board {
         return false;
     }
 
+    // show the type of the piece at a certain location on the grid, not counting the current piece
     @Override
     public Piece.PieceType getGrid(int x, int y) {
         if (outOfBounds(x, y) || this.board[x][y] == null || isPointOnCurrentPiece(new Point(x, y))) {
@@ -384,6 +394,7 @@ public final class TetrisBoard implements Board {
         }
     }
 
+    // determine whether coordinates are on the grid
     private boolean outOfBounds(int x, int y) {
         return x < 0 || y < 0 || x >= getWidth() || y >= getHeight();
     }
