@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="Track number of rows cleared">
+    <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="Implemented JTetrisBrain using LameBrain">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" afterDir="false" />
     </list>
@@ -9,6 +9,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -33,26 +40,6 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
-  <component name="RunManager">
-    <configuration name="JTetris" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="assignment.JTetris" />
-      <module name="prog4" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="assignment.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.JTetris" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -111,7 +98,21 @@
       <option name="project" value="LOCAL" />
       <updated>1664750127081</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Refactoring, commenting">
+      <created>1664753856744</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1664753856744</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Implemented JTetrisBrain using LameBrain">
+      <created>1664755257202</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1664755257202</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,6 +134,8 @@
     <MESSAGE value="Fixed pieces not being placed all the way at the bottom" />
     <MESSAGE value="Fixed rows not clearing correctly" />
     <MESSAGE value="Track number of rows cleared" />
-    <option name="LAST_COMMIT_MESSAGE" value="Track number of rows cleared" />
+    <MESSAGE value="Refactoring, commenting" />
+    <MESSAGE value="Implemented JTetrisBrain using LameBrain" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented JTetrisBrain using LameBrain" />
   </component>
 </project>
