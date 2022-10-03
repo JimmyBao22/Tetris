@@ -49,6 +49,12 @@ public final class TetrisBoard implements Board {
         for (int i = 0; i < this.width; i++) {
             this.blocksFilledPerColumn[i] = oldBoard.getColumnHeight(i);
         }
+
+        this.currentPiece = oldBoard.getCurrentPiece();
+        this.currentPosition = oldBoard.getCurrentPiecePosition();
+
+        this.lastResult = oldBoard.getLastResult();
+        this.lastAction = oldBoard.getLastAction();
     }
 
     // Given an action, update the board and set the result appropriately
