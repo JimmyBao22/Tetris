@@ -1,0 +1,354 @@
+Index: src/main/java/assignment/TetrisBoard.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package assignment;\n\nimport java.awt.*;\n\n/**\n * Represents a Tetris board -- essentially a 2D grid of piece types (or nulls). Supports\n * tetris pieces and row clearing.  Does not do any drawing or have any idea of\n * pixels. Instead, just represents the abstract 2D board.\n */\npublic final class TetrisBoard implements Board {\n\n    // JTetris will use this constructor\n    private int width, height, maxHeight, rowsCleared;\n    private Piece[][] board;\n    private int[] blocksFilledPerRow, blocksFilledPerColumn;\n    private Action lastAction;\n    private Result lastResult;\n    private Piece currentPiece;\n    private Point currentPosition;\n\n    public TetrisBoard(int width, int height) {\n        this.width = width;\n        this.height = height;\n        this.maxHeight = 0;\n        this.rowsCleared = 0;\n        this.board = new Piece[width][height];\n        this.blocksFilledPerRow = new int[height];\n        this.blocksFilledPerColumn = new int[width];\n    }\n\n    // Create this board by cloning an old one\n    public TetrisBoard(TetrisBoard oldBoard) {\n        this.width = oldBoard.getWidth();\n        this.height = oldBoard.getHeight();\n        this.maxHeight = oldBoard.getMaxHeight();\n        this.rowsCleared = oldBoard.getRowsCleared();\n        this.board = new Piece[this.width][this.height];\n        for (int i = 0; i < this.width; i++) {\n            for (int j = 0; j < this.height; j++) {\n                this.board[i][j] = oldBoard.board[i][j];\n            }\n        }\n        this.blocksFilledPerRow = new int[this.height];\n        for (int i = 0; i < this.height; i++) {\n            this.blocksFilledPerRow[i] = oldBoard.getRowWidth(i);\n        }\n        this.blocksFilledPerColumn = new int[this.width];\n        for (int i = 0; i < this.width; i++) {\n            this.blocksFilledPerColumn[i] = oldBoard.getColumnHeight(i);\n        }\n    }\n\n    @Override\n    public Result move(Action act) {\n        // TODO implement and set lastResult to the returned result\n        if (currentPiece == null) {\n            lastResult = Result.NO_PIECE;\n            return lastResult;\n        }\n\n        Point[] body = currentPiece.getBody();\n        Point newPosition;\n        switch (act) {\n            case LEFT:\n                newPosition = new Point((int)(currentPosition.getX()) - 1, (int)(currentPosition.getY()));\n                movePieceToNewPosition(body, newPosition);\n                break;\n            case RIGHT:\n                newPosition = new Point((int)(currentPosition.getX()) + 1, (int)(currentPosition.getY()));\n                movePieceToNewPosition(body, newPosition);\n                break;\n            case DOWN:\n                newPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - 1);\n                movePieceToNewPosition(body, newPosition);\n                checkIfPiecePlaced(body);\n                break;\n            case DROP:\n                int height = dropHeight(currentPiece, (int)(currentPosition.getX()));\n                newPosition = new Point((int)(currentPosition.getX()), height);\n                movePieceToNewPosition(body, newPosition);\n                checkIfPiecePlaced(body);\n                break;\n            case CLOCKWISE:\n                rotateCurrentPiece(true);\n                break;\n            case COUNTERCLOCKWISE:\n                rotateCurrentPiece(false);\n                break;\n            case HOLD:\n                lastResult = Result.SUCCESS;\n                break;\n            case NOTHING:\n                lastResult = Result.SUCCESS;\n                break;\n        }\n        lastAction = act;\n        return lastResult;\n    }\n\n    // try to rotate the current piece, set last result to success or out of bounds\n    private void rotateCurrentPiece(boolean clockwise) {\n        Point[][] wallkickLookup;\n        if (currentPiece.getType() == Piece.PieceType.STICK) {\n            wallkickLookup = clockwise ? Piece.I_CLOCKWISE_WALL_KICKS : Piece.I_COUNTERCLOCKWISE_WALL_KICKS;\n        } else {\n            wallkickLookup = clockwise ? Piece.NORMAL_CLOCKWISE_WALL_KICKS : Piece.NORMAL_COUNTERCLOCKWISE_WALL_KICKS;\n        }\n\n        // remove the old body\n        setPiece(null, currentPiece.getBody(), currentPosition);\n        int sourceRotationIndex = currentPiece.getRotationIndex();\n\n        // rotate it\n        Piece rotatedPiece = clockwise ? currentPiece.clockwisePiece() : currentPiece.counterclockwisePiece();\n\n        for (Point potentialMovement : wallkickLookup[sourceRotationIndex]) {\n            int newX = (int) (currentPosition.getX() + potentialMovement.getX());\n            int newY = (int) (currentPosition.getY() + potentialMovement.getY());\n\n            Point newPosition = new Point(newX, newY);\n            if (checkPiece(rotatedPiece, newPosition) == 0) {\n                // we found the rotation + translation that works\n                currentPiece = rotatedPiece;\n                currentPosition = newPosition;\n                setPiece(currentPiece, currentPiece.getBody(), currentPosition);\n                lastResult = Result.SUCCESS;\n                return;\n            }\n        }\n\n        // we checked all rotation + translations, none work\n        // put the old body back where it was\n        setPiece(currentPiece, currentPiece.getBody(), currentPosition);\n        lastResult = Result.OUT_BOUNDS;\n    }\n\n    // after the current piece is placed, check the rows it is a part of and clear them as needed\n    private void clearRows() {\n        for (int i = currentPiece.getHeight() - 1; i >= 0; i--) {\n            int y = (int) (currentPosition.getY()) + i;\n            // if this row is full\n            if (y >= 0 && (getRowWidth(y) == getWidth())) {\n                // replace every cell with the contents of the one above\n                for (int x = 0; x < getWidth(); x++) {\n                    for (int row = y; row < getHeight() - 1; row++) {\n                        board[x][row] = board[x][row + 1];\n                    }\n\n                    // top row is empty now\n                    board[x][getHeight() - 1] = null;\n\n                    // we removed 1 block from each column\n                    blocksFilledPerColumn[x]--;\n                }\n\n                // shift blocks per row counts down by one row\n                for (int row = y; row < getHeight() - 1; row++) {\n                    blocksFilledPerRow[row] = blocksFilledPerRow[row + 1];\n                }\n\n                // no blocks in the top row\n                blocksFilledPerRow[getHeight() - 1] = 0;\n\n                rowsCleared++;\n            }\n        }\n    }\n\n    // check if the piece can be placed\n    private void checkIfPiecePlaced(Point[] body) {\n        // checks if the drop height of the piece already equals the current piece's location. If it does,\n            // that means the piece is placed.\n        if (dropHeight(currentPiece, (int)(currentPosition.getX())) == (int)(currentPosition.getY())) {\n            updateInstanceVariables(body);\n            clearRows();\n            lastResult = Result.PLACE;\n        }\n\n        // checks if the piece can be moved 1 point down. If it cannot, then we cannot move the piece down\n//        Point checkPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - 1);\n//        if (checkPiece(currentPiece, checkPosition) != 0) {\n//            // cannot move the piece down 1\n//            updateInstanceVariables(body);\n//            clearRows();\n//            lastResult = Result.PLACE;\n//        }\n    }\n\n    // TODO dont name this method like this, extremely ambiguous\n    // updates the instance variables for max height and blocks filled per column/row\n    private void updateInstanceVariables(Point[] body) {\n        for (int i = 0; i < body.length; i++) {\n            int x = (int) (currentPosition.getX() + body[i].getX());\n            int y = (int) (currentPosition.getY() + body[i].getY());\n            blocksFilledPerColumn[x] = Math.max(getColumnHeight(x), y + 1);\n            maxHeight = Math.max(getMaxHeight(), y + 1);\n            blocksFilledPerRow[y]++;\n        }\n    }\n\n    // moves the piece to the new position if applicable, and sets the result\n    private void movePieceToNewPosition(Point[] body, Point newPosition) {\n        int result = checkPiece(currentPiece, newPosition);\n        if (result == 0) {\n            // can place the piece in this new position\n\n            // remove the piece from the current position\n            setPiece(null, body, currentPosition);\n\n            // add the piece to the new position\n            setPiece(currentPiece, body, newPosition);\n            currentPosition = newPosition;\n\n            lastResult = Result.SUCCESS;\n        }\n        else {\n            lastResult = Result.OUT_BOUNDS;\n        }\n    }\n\n    @Override\n    public Board testMove(Action act) {\n        Board newBoard = new TetrisBoard(this);\n        newBoard.move(act);\n        return newBoard;\n    }\n\n    @Override\n    public Piece getCurrentPiece() { return this.currentPiece; }\n\n    @Override\n    public Point getCurrentPiecePosition() {\n        return this.currentPosition;\n    }\n\n    @Override\n    public void nextPiece(Piece p, Point spawnPosition) {\n        Point[] body = p.getBody();\n        // throw corresponding error based on result of checkPiece function\n        int result = checkPiece(p, spawnPosition);\n        if (result == 1) {\n            throw new IllegalArgumentException(\"Piece is out of bounds\");\n        }\n        if (result == 2) {\n            throw new IllegalArgumentException(\"Piece intersects with existing piece\");\n        }\n\n        // place the piece if all preconditions are passed\n        setPiece(p, body, spawnPosition);\n\n        this.currentPiece = p;\n        this.currentPosition = spawnPosition;\n    }\n\n    // adds a piece p to the given position. If you want to remove a piece, then a null piece can be passed in\n    private void setPiece(Piece p, Point[] body, Point position) {\n        for (int i = 0; i < body.length; i++) {\n            int x = (int) (position.getX() + body[i].getX());\n            int y = (int) (position.getY() + body[i].getY());\n            board[x][y] = p;\n        }\n    }\n\n    // checks whether a piece p can be placed in the given position\n        // returns integer: 0 means it works, 1 means piece is out of bounds, 2 means piece intersects\n    private int checkPiece(Piece p, Point position) {\n        Point[] body = p.getBody();\n        // make sure the piece is in bounds and does not intersect\n        for (int i = 0; i < body.length; i++) {\n            int currentPointX = (int)(position.getX() + body[i].getX());\n            int currentPointY = (int)(position.getY() + body[i].getY());\n\n            // point is out of bounds\n            if (outOfBounds(currentPointX, currentPointY)) {\n                return 1;\n            }\n\n            // point is already occupied by a piece (excluding the current piece)\n            if (getGrid(currentPointX, currentPointY) != null) {\n                return 2;\n            }\n        }\n        return 0;\n    }\n\n    @Override\n    public boolean equals(Object other) {\n        // Ignore objects which aren't also tetris boards.\n        if(!(other instanceof TetrisBoard)) return false;\n        TetrisBoard otherBoard = (TetrisBoard) other;\n\n        for (int i = 0; i < height; i++) {\n            for (int j = 0; j < width; j++) {\n                if (!this.board[i][j].equals(otherBoard.board[i][j])) {\n                    return false;\n                }\n            }\n        }\n\n        // ensure they have the same current piece at the same location\n        return this.getCurrentPiece().equals(otherBoard.getCurrentPiece()) &&\n                this.getCurrentPiecePosition().equals(otherBoard.getCurrentPiecePosition());\n    }\n\n    @Override\n    public Result getLastResult() { return this.lastResult; }\n\n    @Override\n    public Action getLastAction() { return this.lastAction; }\n\n    @Override\n    public int getRowsCleared() { return this.rowsCleared; }\n\n    @Override\n    public int getWidth() { return this.width; }\n\n    @Override\n    public int getHeight() { return this.height; }\n\n    @Override\n    public int getMaxHeight() { return this.maxHeight; }\n\n    @Override\n    public int dropHeight(Piece piece, int x) {\n        int[] skirt = piece.getSkirt();\n\n        int minSkirt = skirt[0];\n        for (int skirtVal : skirt) {\n            minSkirt = Math.min(skirtVal, minSkirt);\n        }\n\n        int dropY = -minSkirt;\n\n        for (int i = 0; i < skirt.length; i++) {\n            // The drop height will depend on each element in the skirt array with the respective\n                // height the piece needs to go down at this index\n            if (skirt[i] != Integer.MAX_VALUE) {\n                int y = (int) (currentPosition.getY() + skirt[i]);\n\n                for (int j = y; j >= 0; j--) {\n                    if (getGrid(x + i, j) != null) {\n                        // there exists a piece at this index (x, j), therefore can move it to height j+1\n                        dropY = Math.max(dropY, j + 1 - skirt[i]);\n                        break;\n                    }\n                }\n            }\n        }\n        return dropY;\n    }\n\n    @Override\n    public int getColumnHeight(int x) {\n        return this.blocksFilledPerColumn[x];\n    }\n\n    @Override\n    public int getRowWidth(int y) {\n        return this.blocksFilledPerRow[y];\n    }\n\n    // determine whether a point is on the current piece\n    private boolean isPointOnCurrentPiece(Point toCheck) {\n        if (currentPiece == null || currentPosition == null || toCheck == null) {\n            return false;\n        }\n\n        for (Point p : currentPiece.getBody()) {\n            Point realCurrentPoint = new Point((int) (p.getX() + currentPosition.getX()), (int) (p.getY() + currentPosition.getY()));\n            if (realCurrentPoint.equals(toCheck)) {\n                return true;\n            }\n        }\n\n        return false;\n    }\n\n    @Override\n    public Piece.PieceType getGrid(int x, int y) {\n        if (outOfBounds(x, y) || this.board[x][y] == null || isPointOnCurrentPiece(new Point(x, y))) {\n            return null;\n        } else {\n            return this.board[x][y].getType();\n        }\n    }\n\n    private boolean outOfBounds(int x, int y) {\n        return x < 0 || y < 0 || x >= getWidth() || y >= getHeight();\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/assignment/TetrisBoard.java b/src/main/java/assignment/TetrisBoard.java
+--- a/src/main/java/assignment/TetrisBoard.java	(revision 3d4b8ef3bfe6e3ec4657f23448b1e8961cb608cb)
++++ b/src/main/java/assignment/TetrisBoard.java	(date 1664752056919)
+@@ -10,6 +10,10 @@
+ public final class TetrisBoard implements Board {
+ 
+     // JTetris will use this constructor
++
++    // TODO some kind of issue where only square pieces actually hit the bottom, the rest stay floating one above
++    // skirt issue?
++    // TODO update and implement rows cleared
+     private int width, height, maxHeight, rowsCleared;
+     private Piece[][] board;
+     private int[] blocksFilledPerRow, blocksFilledPerColumn;
+@@ -81,10 +85,12 @@
+                 checkIfPiecePlaced(body);
+                 break;
+             case CLOCKWISE:
+-                rotateCurrentPiece(true);
++                // TODO
++                lastResult = Result.OUT_BOUNDS;
+                 break;
+             case COUNTERCLOCKWISE:
+-                rotateCurrentPiece(false);
++                // TODO
++                lastResult = Result.OUT_BOUNDS;
+                 break;
+             case HOLD:
+                 lastResult = Result.SUCCESS;
+@@ -97,71 +103,29 @@
+         return lastResult;
+     }
+ 
+-    // try to rotate the current piece, set last result to success or out of bounds
+-    private void rotateCurrentPiece(boolean clockwise) {
+-        Point[][] wallkickLookup;
+-        if (currentPiece.getType() == Piece.PieceType.STICK) {
+-            wallkickLookup = clockwise ? Piece.I_CLOCKWISE_WALL_KICKS : Piece.I_COUNTERCLOCKWISE_WALL_KICKS;
+-        } else {
+-            wallkickLookup = clockwise ? Piece.NORMAL_CLOCKWISE_WALL_KICKS : Piece.NORMAL_COUNTERCLOCKWISE_WALL_KICKS;
+-        }
+-
+-        // remove the old body
+-        setPiece(null, currentPiece.getBody(), currentPosition);
+-        int sourceRotationIndex = currentPiece.getRotationIndex();
+-
+-        // rotate it
+-        Piece rotatedPiece = clockwise ? currentPiece.clockwisePiece() : currentPiece.counterclockwisePiece();
+-
+-        for (Point potentialMovement : wallkickLookup[sourceRotationIndex]) {
+-            int newX = (int) (currentPosition.getX() + potentialMovement.getX());
+-            int newY = (int) (currentPosition.getY() + potentialMovement.getY());
+-
+-            Point newPosition = new Point(newX, newY);
+-            if (checkPiece(rotatedPiece, newPosition) == 0) {
+-                // we found the rotation + translation that works
+-                currentPiece = rotatedPiece;
+-                currentPosition = newPosition;
+-                setPiece(currentPiece, currentPiece.getBody(), currentPosition);
+-                lastResult = Result.SUCCESS;
+-                return;
+-            }
+-        }
+-
+-        // we checked all rotation + translations, none work
+-        // put the old body back where it was
+-        setPiece(currentPiece, currentPiece.getBody(), currentPosition);
+-        lastResult = Result.OUT_BOUNDS;
+-    }
+-
+-    // after the current piece is placed, check the rows it is a part of and clear them as needed
+     private void clearRows() {
+         for (int i = currentPiece.getHeight() - 1; i >= 0; i--) {
+-            int y = (int) (currentPosition.getY()) + i;
+-            // if this row is full
+-            if (y >= 0 && (getRowWidth(y) == getWidth())) {
+-                // replace every cell with the contents of the one above
++            int y = (int)(currentPosition.getY() + i);
++            // check if this row is cleared by checking if the number of blocks filled equals the width
++                // of the board
++            if (y >= 0 && getRowWidth(y) == getWidth()) {
++                // clear this row
+                 for (int x = 0; x < getWidth(); x++) {
+-                    for (int row = y; row < getHeight() - 1; row++) {
+-                        board[x][row] = board[x][row + 1];
+-                    }
+-
+-                    // top row is empty now
+-                    board[x][getHeight() - 1] = null;
+-
+-                    // we removed 1 block from each column
+-                    blocksFilledPerColumn[x]--;
+-                }
+-
+-                // shift blocks per row counts down by one row
+-                for (int row = y; row < getHeight() - 1; row++) {
+-                    blocksFilledPerRow[row] = blocksFilledPerRow[row + 1];
++                    if (getGrid(x, y) != null || isPointOnCurrentPiece(new Point(x, y))) {
++                        // shift pieces on top of this block down
++                        blocksFilledPerColumn[x]--;
++                        for (int j = y + 1; j <= getHeight(); j++) {
++                            if (j == getHeight()) {
++                                blocksFilledPerRow[j-1] = 0;
++                                board[x][j - 1] = null;
++                            } else {
++                                blocksFilledPerRow[j-1] = blocksFilledPerRow[j];
++                                board[x][j - 1] = board[x][j];
++                            }
++                            if (getGrid(x, y) == null) break;
++                        }
++                    }
+                 }
+-
+-                // no blocks in the top row
+-                blocksFilledPerRow[getHeight() - 1] = 0;
+-
+-                rowsCleared++;
+             }
+         }
+     }
+@@ -298,8 +262,7 @@
+         }
+ 
+         // ensure they have the same current piece at the same location
+-        return this.getCurrentPiece().equals(otherBoard.getCurrentPiece()) &&
+-                this.getCurrentPiecePosition().equals(otherBoard.getCurrentPiecePosition());
++        return (this.getCurrentPiece().equals(otherBoard.getCurrentPiece())) && (this.getCurrentPiecePosition().equals(otherBoard.getCurrentPiecePosition()));
+     }
+ 
+     @Override
+@@ -322,15 +285,8 @@
+ 
+     @Override
+     public int dropHeight(Piece piece, int x) {
+-        int[] skirt = piece.getSkirt();
+-
+-        int minSkirt = skirt[0];
+-        for (int skirtVal : skirt) {
+-            minSkirt = Math.min(skirtVal, minSkirt);
+-        }
+-
+-        int dropY = -minSkirt;
+-
++        int dropY = 0;
++        int[] skirt = piece.getSkirt();;
+         for (int i = 0; i < skirt.length; i++) {
+             // The drop height will depend on each element in the skirt array with the respective
+                 // height the piece needs to go down at this index
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"f5b0ef67-77df-41d6-b519-5585acf9fcf7\" name=\"Changes\" comment=\"Fixed rows not clearing correctly\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2FMojIVwW6WwqHWRhC3zsoAwoCM\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\n    \"last_opened_file_path\": \"/Users/jimmybao/CS/Java/CS314H/prog4\",\n    \"project.structure.last.edited\": \"Project\",\n    \"project.structure.proportion\": \"0.15\",\n    \"project.structure.side.proportion\": \"0.2\"\n  }\n}]]></component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"f5b0ef67-77df-41d6-b519-5585acf9fcf7\" name=\"Changes\" comment=\"\" />\n      <created>1664311448027</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1664311448027</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Implemented all of TetrisPiece except rotateCounterclockwise on Point arrays\">\n      <created>1664334200594</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1664334200594</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"Implemented a lot of methods fr\">\n      <created>1664416773228</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1664416773228</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"Fixed piece duplication on spawn (checking whether a piece is equal to the current piece does not determine whether the point is on the current piece)\">\n      <created>1664572481918</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1664572481918</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"Implemented rotations and wall kicks\">\n      <created>1664746159800</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1664746159800</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"Fixed pieces not being placed all the way at the bottom\">\n      <created>1664747213175</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1664747213175</updated>\n    </task>\n    <task id=\"LOCAL-00006\" summary=\"Fixed rows not clearing correctly\">\n      <created>1664750033934</created>\n      <option name=\"number\" value=\"00006\" />\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1664750033934</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"7\" />\n    <servers />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"Implemented all of TetrisPiece except rotateCounterclockwise on Point arrays\" />\n    <MESSAGE value=\"Implemented a lot of methods fr\" />\n    <MESSAGE value=\"Fixed piece duplication on spawn (checking whether a piece is equal to the current piece does not determine whether the point is on the current piece)\" />\n    <MESSAGE value=\"Implemented rotations and wall kicks\" />\n    <MESSAGE value=\"Fixed pieces not being placed all the way at the bottom\" />\n    <MESSAGE value=\"Fixed rows not clearing correctly\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Fixed rows not clearing correctly\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 3d4b8ef3bfe6e3ec4657f23448b1e8961cb608cb)
++++ b/.idea/workspace.xml	(date 1664753770975)
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="Fixed rows not clearing correctly">
++    <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" afterDir="false" />
+     </list>
+@@ -22,17 +22,38 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "last_opened_file_path": "/Users/jimmybao/CS/Java/CS314H/prog4",
+-    "project.structure.last.edited": "Project",
+-    "project.structure.proportion": "0.15",
+-    "project.structure.side.proportion": "0.2"
+-  }
+-}]]></component>
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;/Users/jimmybao/CS/Java/CS314H/prog4&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
++  }
++}</component>
++  <component name="RunManager">
++    <configuration name="JTetris" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="assignment.JTetris" />
++      <module name="prog4" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="assignment.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <recent_temporary>
++      <list>
++        <item itemvalue="Application.JTetris" />
++      </list>
++    </recent_temporary>
++  </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+@@ -42,49 +63,84 @@
+       <option name="presentableId" value="Default" />
+       <updated>1664311448027</updated>
+     </task>
+-    <task id="LOCAL-00001" summary="Implemented all of TetrisPiece except rotateCounterclockwise on Point arrays">
+-      <created>1664334200594</created>
++    <task id="LOCAL-00001" summary="Finished Tetris Piece class">
++      <created>1664335936830</created>
+       <option name="number" value="00001" />
+       <option name="presentableId" value="LOCAL-00001" />
+       <option name="project" value="LOCAL" />
+-      <updated>1664334200594</updated>
++      <updated>1664335936830</updated>
+     </task>
+-    <task id="LOCAL-00002" summary="Implemented a lot of methods fr">
+-      <created>1664416773228</created>
++    <task id="LOCAL-00002" summary="finished testMove">
++      <created>1664417099097</created>
+       <option name="number" value="00002" />
+       <option name="presentableId" value="LOCAL-00002" />
+       <option name="project" value="LOCAL" />
+-      <updated>1664416773228</updated>
++      <updated>1664417099097</updated>
+     </task>
+-    <task id="LOCAL-00003" summary="Fixed piece duplication on spawn (checking whether a piece is equal to the current piece does not determine whether the point is on the current piece)">
+-      <created>1664572481918</created>
++    <task id="LOCAL-00003" summary="Finished constructor">
++      <created>1664421401234</created>
+       <option name="number" value="00003" />
+       <option name="presentableId" value="LOCAL-00003" />
+       <option name="project" value="LOCAL" />
+-      <updated>1664572481918</updated>
++      <updated>1664421401234</updated>
+     </task>
+-    <task id="LOCAL-00004" summary="Implemented rotations and wall kicks">
+-      <created>1664746159800</created>
++    <task id="LOCAL-00004" summary="worked on move function">
++      <created>1664487762347</created>
+       <option name="number" value="00004" />
+       <option name="presentableId" value="LOCAL-00004" />
+       <option name="project" value="LOCAL" />
+-      <updated>1664746159800</updated>
++      <updated>1664487762347</updated>
+     </task>
+-    <task id="LOCAL-00005" summary="Fixed pieces not being placed all the way at the bottom">
+-      <created>1664747213175</created>
++    <task id="LOCAL-00005" summary="fixed some edge cases">
++      <created>1664498751344</created>
+       <option name="number" value="00005" />
+       <option name="presentableId" value="LOCAL-00005" />
+       <option name="project" value="LOCAL" />
+-      <updated>1664747213175</updated>
++      <updated>1664498751344</updated>
+     </task>
+-    <task id="LOCAL-00006" summary="Fixed rows not clearing correctly">
+-      <created>1664750033934</created>
++    <task id="LOCAL-00006" summary="Created functions to decrease repetition, and fixed some bugs">
++      <created>1664503111530</created>
+       <option name="number" value="00006" />
+       <option name="presentableId" value="LOCAL-00006" />
+       <option name="project" value="LOCAL" />
+-      <updated>1664750033934</updated>
++      <updated>1664503111530</updated>
++    </task>
++    <task id="LOCAL-00007" summary="Removed some bugs and added todo">
++      <created>1664503448525</created>
++      <option name="number" value="00007" />
++      <option name="presentableId" value="LOCAL-00007" />
++      <option name="project" value="LOCAL" />
++      <updated>1664503448525</updated>
++    </task>
++    <task id="LOCAL-00008" summary="Implemented the update of instance variables">
++      <created>1664512018163</created>
++      <option name="number" value="00008" />
++      <option name="presentableId" value="LOCAL-00008" />
++      <option name="project" value="LOCAL" />
++      <updated>1664512018164</updated>
++    </task>
++    <task id="LOCAL-00009" summary="Debugging">
++      <created>1664513041740</created>
++      <option name="number" value="00009" />
++      <option name="presentableId" value="LOCAL-00009" />
++      <option name="project" value="LOCAL" />
++      <updated>1664513041740</updated>
++    </task>
++    <task id="LOCAL-00010" summary="Fixed Floating Issue">
++      <created>1664666567875</created>
++      <option name="number" value="00010" />
++      <option name="presentableId" value="LOCAL-00010" />
++      <option name="project" value="LOCAL" />
++      <updated>1664666567875</updated>
+     </task>
+-    <option name="localTasksCounter" value="7" />
++    <task id="LOCAL-00011" summary="Fixed Drop Height">
++      <created>1664667482851</created>
++      <option name="number" value="00011" />
++      <option name="presentableId" value="LOCAL-00011" />
++      <option name="project" value="LOCAL" />
++      <updated>1664667482851</updated>
++    </task>
++    <option name="localTasksCounter" value="12" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -99,12 +155,17 @@
+     </option>
+   </component>
+   <component name="VcsManagerConfiguration">
+-    <MESSAGE value="Implemented all of TetrisPiece except rotateCounterclockwise on Point arrays" />
+-    <MESSAGE value="Implemented a lot of methods fr" />
+-    <MESSAGE value="Fixed piece duplication on spawn (checking whether a piece is equal to the current piece does not determine whether the point is on the current piece)" />
+-    <MESSAGE value="Implemented rotations and wall kicks" />
+-    <MESSAGE value="Fixed pieces not being placed all the way at the bottom" />
+-    <MESSAGE value="Fixed rows not clearing correctly" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Fixed rows not clearing correctly" />
++    <MESSAGE value="Finished Tetris Piece class" />
++    <MESSAGE value="finished testMove" />
++    <MESSAGE value="Finished constructor" />
++    <MESSAGE value="worked on move function" />
++    <MESSAGE value="fixed some edge cases" />
++    <MESSAGE value="Created functions to decrease repetition, and fixed some bugs" />
++    <MESSAGE value="Removed some bugs and added todo" />
++    <MESSAGE value="Implemented the update of instance variables" />
++    <MESSAGE value="Debugging" />
++    <MESSAGE value="Fixed Floating Issue" />
++    <MESSAGE value="Fixed Drop Height" />
++    <option name="LAST_COMMIT_MESSAGE" value="Fixed Drop Height" />
+   </component>
+ </project>
+\ No newline at end of file
