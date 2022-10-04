@@ -11,7 +11,7 @@ public class JTetrisBrain extends JTetris {
     }
     JTetrisBrain() {
 //        super();
-        brain = new LameBrain();
+        brain = new SmartBrain();
         timer = new javax.swing.Timer(DELAY, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 tick(brain.nextMove(board));
