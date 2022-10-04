@@ -31,8 +31,10 @@ public final class TetrisBoard implements Board {
 
     // Create a board by cloning an old one
     public TetrisBoard(TetrisBoard oldBoard) {
+        // copy all instance variables
         this.width = oldBoard.getWidth();
         this.height = oldBoard.getHeight();
+
         this.maxHeight = oldBoard.getMaxHeight();
         this.rowsCleared = oldBoard.getRowsCleared();
         this.board = new Piece[this.width][this.height];
