@@ -3,7 +3,6 @@ package assignment;
 import java.util.*;
 
 public class SmartBrain implements Brain {
-
     private ArrayList<Board> options;
     private ArrayList<Board.Action> firstMoves;
 
@@ -19,7 +18,7 @@ public class SmartBrain implements Brain {
 
         // Check all of the options and get the one with the highest score
         for (int i = 0; i < options.size(); i++) {
-            int score = scoreBoard(options.get(i));
+            int score = scoreBoard(options.get(i), currentBoard);
             if (score > best) {
                 best = score;
                 bestIndex = i;
@@ -76,7 +75,8 @@ public class SmartBrain implements Brain {
     }
 
     // score, higher = better
-    private int scoreBoard(Board newBoard) {
-        return 100 - (newBoard.getMaxHeight() * 5);
+    private int scoreBoard(Board newBoard, Board currentBoard) {
+        return 100 - (newBoard.getMaxHeight() * 5)
+                + 200 * (newBoard.getRowsCleared() - currentBoard.getRowsCleared());
     }
 }

@@ -10,7 +10,6 @@ public class JTetrisBrain extends JTetris {
         createGUI(new JTetrisBrain());
     }
     JTetrisBrain() {
-//        super();
         brain = new SmartBrain();
         timer = new javax.swing.Timer(DELAY, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
