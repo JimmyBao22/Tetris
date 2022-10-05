@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_27_22,_10_04_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_27_22__10_04_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetris.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetris.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JTetrisBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JTetrisBrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JTetris.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JTetris.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,6 +49,19 @@
   }
 }</component>
   <component name="RunManager" selected="Application.JBrainTraining">
+    <configuration name="FixWeights" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.FixWeights" />
+      <module name="prog4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="JBrainTraining" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="assignment.JBrainTraining" />
       <module name="prog4" />
@@ -84,9 +101,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="testwriting" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.testwriting" />
+      <module name="prog4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.JBrainTraining" />
+        <item itemvalue="Application.FixWeights" />
+        <item itemvalue="Application.testwriting" />
         <item itemvalue="Application.JTetrisBrain" />
         <item itemvalue="Application.JTetris" />
       </list>
@@ -213,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664944712023</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="finished j tetris brain class">
+      <created>1664945912854</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1664945912854</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -241,6 +280,7 @@
     <MESSAGE value="Commit Smart Brain metric generation" />
     <MESSAGE value="Commit Weight Brain metric generation" />
     <MESSAGE value="udated weightbrain and jbraintraining" />
-    <option name="LAST_COMMIT_MESSAGE" value="udated weightbrain and jbraintraining" />
+    <MESSAGE value="finished j tetris brain class" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished j tetris brain class" />
   </component>
 </project>

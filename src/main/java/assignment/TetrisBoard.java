@@ -158,7 +158,7 @@ public final class TetrisBoard implements Board {
         for (int i = currentPiece.getHeight() - 1; i >= 0; i--) {
             int y = (int) (currentPosition.getY()) + i;
             // if this row is full
-            if (y >= 0 && (getRowWidth(y) == getWidth())) {
+            if (y >= 0 && y < getWidth() && (getRowWidth(y) == getWidth())) {
                 // replace every cell with the contents of the one above
                 for (int x = 0; x < getWidth(); x++) {
                     for (int row = y; row < getHeight() - 1; row++) {
@@ -332,6 +332,7 @@ public final class TetrisBoard implements Board {
     @Override
     public int getMaxHeight() { return this.maxHeight; }
 
+    // TODO copy method over and then redo this override method
     // determine the height at which a piece would rest if dropped at in a given column
     @Override
     public int dropHeight(Piece piece, int x) {

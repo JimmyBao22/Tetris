@@ -13,14 +13,14 @@ public class WeightBrain implements Brain {
 
     public WeightBrain(int width, int height, double[] weights) {
         // generate a random sequence of weights
-        numMetrics = NUM_PIECE_TYPES + 1 + width + 2 + height + height;
+        numMetrics = NUM_PIECE_TYPES + 1 + width + 2 + width - 1 + height;
         this.width = width;
         this.height = height;
         if (weights == null) {
             // randomly initialize weights
             this.weights = new double[numMetrics];
             for (int i = 0; i < numMetrics; i++) {
-                this.weights[i] = Math.random() * 2 - 1;
+                this.weights[i] = Math.random();
             }
         } else {
             this.weights = weights;
@@ -109,26 +109,27 @@ public class WeightBrain implements Brain {
     private double[] returnMetrics(Board newBoard, Board currentBoard, int n) {
         double[] metrics = new double[n];
         int i = 0;
-        int indexOfPieceType = newBoard.getCurrentPiece().getType().ordinal();
+        // int indexOfPieceType = newBoard.getCurrentPiece().getType().ordinal();
         // set the current piece to 1, otherwise to 0. Matters more for matrix rather than vector multiplication
         for (int j = 0; j < NUM_PIECE_TYPES; j++) {
-            metrics[i++] = indexOfPieceType == j ? 1 : 0;
+            // metrics[i++] = indexOfPieceType == j ? 1 : 0;
+            metrics[i++] = 0;
         }
-        metrics[i++] = newBoard.getMaxHeight();                                           // max height
+        metrics[i++] = -20 * (newBoard.getMaxHeight() - currentBoard.getMaxHeight());       // max height
         for (int j = 0; j < newBoard.getWidth(); j++) {
-            metrics[i++] = newBoard.getColumnHeight(j) - currentBoard.getColumnHeight(j); // each column height
+            metrics[i++] = -2 * (newBoard.getColumnHeight(j) - currentBoard.getColumnHeight(j)); // each column height
         }
-        metrics[i++] = countHoles(newBoard) - countHoles(currentBoard);                   // number of holes
-        metrics[i++] = newBoard.getRowsCleared() - currentBoard.getRowsCleared();         // number of rows cleared
-        for (int j = 0; j < newBoard.getHeight(); j++) {
-            metrics[i++] = newBoard.getRowWidth(j) - currentBoard.getRowWidth(j);         // each row width
+        metrics[i++] = -10 * (countHoles(newBoard) - countHoles(currentBoard));                  // number of holes
+        metrics[i++] = 25 * (newBoard.getRowsCleared() - currentBoard.getRowsCleared());         // number of rows cleared
+        for (int j = 1; j < newBoard.getWidth(); j++) {
+            metrics[i++] = -3 * (Math.abs(newBoard.getColumnHeight(j) - newBoard.getColumnHeight(j-1))
+                                - Math.abs(currentBoard.getColumnHeight(j) - currentBoard.getColumnHeight(j-1)));  // differences in row height
         }
 
         for (int j = 0; j < newBoard.getHeight(); j++) {
             // # of open intervals in each row
             int count = 0;
             boolean newSpace = false;
-//            boolean oldSpace = false;
             for (int k = 0; k < newBoard.getWidth(); k++) {
                 if (newBoard.getGrid(k, j) != null) {
                     // there exists a piece here
@@ -140,22 +141,11 @@ public class WeightBrain implements Brain {
                     // there is no piece here
                     newSpace = true;
                 }
-
-//                if (currentBoard.getGrid(k, j) != null) {
-//                    // there exists a piece here
-//                    if (oldSpace) {
-//                        count--;
-//                    }
-//                    oldSpace = false;
-//                } else {
-//                    // there is no piece here
-//                    oldSpace = true;
-//                }
             }
             if (newSpace) count++;
-//            if (oldSpace) count--;
-            metrics[i++] = count;
+            metrics[i++] = -count;
         }
+
         return metrics;
     }
 
