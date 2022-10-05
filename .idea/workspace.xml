@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/SmartBrain.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/SmartBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/SmartBrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +170,28 @@
       <option name="project" value="LOCAL" />
       <updated>1664942138310</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Commit Weight Brain metric generation">
+      <created>1664942589040</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1664942589040</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Commit Weight Brain metric generation">
+      <created>1664942663292</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1664942663292</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Commit Weight Brain metric generation">
+      <created>1664942679710</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1664942679710</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -196,6 +217,7 @@
     <MESSAGE value="Implemented Rotations into brain" />
     <MESSAGE value="Made SmartBrain smarter" />
     <MESSAGE value="Commit Smart Brain metric generation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commit Smart Brain metric generation" />
+    <MESSAGE value="Commit Weight Brain metric generation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit Weight Brain metric generation" />
   </component>
 </project>

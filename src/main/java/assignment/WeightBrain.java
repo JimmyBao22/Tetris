@@ -8,8 +8,8 @@ public class WeightBrain implements Brain {
     private ArrayList<Board.Action> firstMoves;
     private int width, height;
     private double[] weights;
-    public static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
-    public static int numMetrics = 0;
+    private static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
+    private static int numMetrics = 0;
 
     public WeightBrain(int width, int height, double[] weights) {
         // generate a random sequence of weights
@@ -17,9 +17,10 @@ public class WeightBrain implements Brain {
         this.width = width;
         this.height = height;
         if (weights == null) {
-            weights = new double[numMetrics];          // randomly initialize weights
+            // randomly initialize weights
+            this.weights = new double[numMetrics];
             for (int i = 0; i < numMetrics; i++) {
-                weights[i] = (Math.random() * 2) - 1;
+                this.weights[i] = Math.random() * 2 - 1;
             }
         } else {
             this.weights = weights;
