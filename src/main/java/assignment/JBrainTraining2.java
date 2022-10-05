@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.StringTokenizer;
 
-public class JBrainTraining extends JTetris {
+public class JBrainTraining2 extends JTetris {
     private static Brain currentBrain;
 
     private int getNumBlocksPlayed(Brain b) throws InterruptedException{
@@ -22,20 +22,20 @@ public class JBrainTraining extends JTetris {
         return count;
     }
 
-    private static final int NUM_AGENTS = 30;
+    private static final int NUM_AGENTS = 500;
     private static final int NUM_RUNS_PER_AGENT = 3;
-    private static final int NUM_GENERATIONS = 25;
+    private static final int NUM_GENERATIONS = 50;
     private static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
     private int numTopBrains;
     private static int numMetrics;
     private double[][] weights;
-    private static final String FILE_NAME = "weights.txt";
+    private static final String FILE_NAME = "weights2.txt";
 
     private double[][] makeRandomStartingWeights() {
         double[][] randomWeights = new double[NUM_AGENTS][numMetrics];
         for (int i = 0; i < randomWeights.length; i++) {
             for (int j = 0; j < randomWeights[i].length; j++) {
-                randomWeights[i][j] = Math.random();
+                randomWeights[i][j] = 20 * Math.random() - 10;
             }
         }
         return randomWeights;
@@ -48,7 +48,7 @@ public class JBrainTraining extends JTetris {
             double[] medians = new double[NUM_AGENTS];
 
             for (int weightIndex = 0; weightIndex < NUM_AGENTS; weightIndex++) {
-                Brain weightBrain = new WeightBrain(board.getWidth(), board.getHeight(), weights[weightIndex]);
+                Brain weightBrain = new WeightBrain2(board.getWidth(), board.getHeight(), weights[weightIndex]);
                 //Brain weightBrain = new LameBrain();
                 for (int runIndex = 0; runIndex < NUM_RUNS_PER_AGENT; runIndex++) {
                     results[weightIndex][runIndex] = getNumBlocksPlayed(weightBrain);
@@ -65,7 +65,7 @@ public class JBrainTraining extends JTetris {
             }
 
             // find the indices of top brains by median
-            numTopBrains = 5;
+            numTopBrains = 10;
             int[] bestBrainIndices = new int[numTopBrains];
             int i = 0;
             for (; i < numTopBrains && i < NUM_AGENTS; i++) {
@@ -95,6 +95,7 @@ public class JBrainTraining extends JTetris {
             weights = generateNewWeightsFromBestOldOnes(weights, bestBrainIndices);
 
             printWeights();
+            System.out.println(numGenerations + 1 +" complete");
         }
 
         System.out.println("Done.");
@@ -102,7 +103,7 @@ public class JBrainTraining extends JTetris {
     }
 
     private void printWeights() throws IOException {
-        PrintWriter out = new PrintWriter(new FileWriter("weights.txt"));
+        PrintWriter out = new PrintWriter(new FileWriter(FILE_NAME));
         for (int i = 0; i < NUM_AGENTS; i++) {
             for (int j = 0; j < numMetrics; j++) {
                 out.print(weights[i][j] + " ");
@@ -146,7 +147,7 @@ public class JBrainTraining extends JTetris {
         for (int i = 0; i < numMetrics; i++) {
             if (Math.random() < 0.1) {
                 // with a 10% chance, set it to a random variable
-                reproducedWeights[i] = Math.random();
+                reproducedWeights[i] = 20 * Math.random() - 10;
             } else {
                 // with a chooseOneProb chance, choose the weight of index one
                 if (Math.random() < chooseOneProb) {
@@ -173,7 +174,7 @@ public class JBrainTraining extends JTetris {
 
     public static void main(String[] args) {
         try {
-            JBrainTraining self = new JBrainTraining();
+            JBrainTraining2 self = new JBrainTraining2();
             createGUI(self);
             self.train();
 //            System.out.println(self.getNumBlocksPlayed(new WeightBrain(board.getWidth(), board.getHeight(), weights[weightIndex])));
@@ -181,7 +182,8 @@ public class JBrainTraining extends JTetris {
             throw new RuntimeException(e);
         }
     }
-    JBrainTraining() throws IOException {
+
+    JBrainTraining2() throws IOException {
         numMetrics = NUM_PIECE_TYPES + 1 + board.getWidth() + 2 + board.getWidth() - 1 + board.getHeight();
 
         weights = new double[NUM_AGENTS][numMetrics];
