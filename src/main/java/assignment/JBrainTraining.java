@@ -46,7 +46,7 @@ public class JBrainTraining extends JTetris {
         int maximumResult = 0;
         for (int numGenerations = 0; numGenerations < NUM_GENERATIONS; numGenerations++) {
             int[][] results = new int[NUM_AGENTS][NUM_RUNS_PER_AGENT];
-            double[] averages = new double[NUM_AGENTS];
+            double[] medians = new double[NUM_AGENTS];
 
             for (int weightIndex = 0; weightIndex < NUM_AGENTS; weightIndex++) {
                 Brain weightBrain = new WeightBrain(board.getWidth(), board.getHeight(), weights[weightIndex]);
@@ -58,10 +58,11 @@ public class JBrainTraining extends JTetris {
 
                 Arrays.sort(results[weightIndex]);
 
-                for (int j = 0; j < NUM_RUNS_PER_AGENT; j++) {
-                    averages[weightIndex] += results[weightIndex][j];
-                }
-                averages[weightIndex] /= NUM_RUNS_PER_AGENT;
+//                for (int j = 0; j < NUM_RUNS_PER_AGENT; j++) {
+//                    averages[weightIndex] += results[weightIndex][j];
+//                }
+//                averages[weightIndex] /= NUM_RUNS_PER_AGENT;
+                medians[weightIndex] = results[weightIndex][NUM_RUNS_PER_AGENT / 2];
             }
 
             // find the indices of top brains by median
@@ -73,7 +74,7 @@ public class JBrainTraining extends JTetris {
             }
             for (; i < NUM_AGENTS; i++) {
                 for (int j = numTopBrains - 1; j >= 0; j--) {
-                    if (averages[i] <= bestBrainIndices[j]) {
+                    if (medians[i] <= bestBrainIndices[j]) {
                         // set it to the previous one, and push those back
                         int currentIndex = i;
                         for (int k = j + 1; k < numTopBrains; k++) {
