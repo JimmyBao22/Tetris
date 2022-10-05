@@ -41,7 +41,7 @@ public class JBrainTraining extends JTetris {
             int[] medians = new int[NUM_AGENTS];
 
             for (int weightIndex = 0; weightIndex < NUM_AGENTS; weightIndex++) {
-                Brain weightBrain = new WeightBrain(weights[weightIndex]);  //TODO use jimmys weightedbrain
+                Brain weightBrain = new WeightBrain(weights[weightIndex]); //TODO use jimmys weightedbrain
                 for (int runIndex = 0; runIndex < NUM_RUNS_PER_AGENT; runIndex++) {
                     results[weightIndex][runIndex] = getNumBlocksPlayed(weightBrain);
                 }
@@ -52,7 +52,7 @@ public class JBrainTraining extends JTetris {
             }
 
             int[] bestBrainIndices = // find the indices of top 5 brains by median;
-                    weights = generateNewWeightsFromBestOldOnes(weights, bestBrainIndices);
+            weights = generateNewWeightsFromBestOldOnes(weights, bestBrainIndices);
         }
 
         System.out.println(weights);
