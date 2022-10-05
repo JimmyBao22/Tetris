@@ -16,15 +16,15 @@ public class JBrainTraining extends JTetris {
         startGame();
         while (board.getMaxHeight() <= HEIGHT) {
             // System.out.println("not done yet: " + board.getRowsCleared());
-            Thread.sleep(50);
+            Thread.sleep(10);
         }
         // now the game is stopped
         return board.getRowsCleared();
     }
 
-    private static final int NUM_AGENTS = 20;
-    private static final int NUM_RUNS_PER_AGENT = 5;
-    private static final int NUM_GENERATIONS = 10;
+    private static final int NUM_AGENTS = 30;
+    private static final int NUM_RUNS_PER_AGENT = 3;
+    private static final int NUM_GENERATIONS = 25;
     private static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
     private int numTopBrains;
     private static int numMetrics;
@@ -110,6 +110,7 @@ public class JBrainTraining extends JTetris {
             }
             out.println();
         }
+        out.flush();
         out.close();
     }
 
@@ -132,11 +133,7 @@ public class JBrainTraining extends JTetris {
 
         for (; i < NUM_AGENTS; i++) {
             int firstIndex = (int)(Math.random() * 5);
-            int secondIndex = firstIndex;
-            // make sure second index is not first index
-            while (secondIndex == firstIndex) {
-                secondIndex = (int)(Math.random() * 5);
-            }
+            int secondIndex = (int)(Math.random() * 5);    // note: can be same (design decision)
             updatedWeights[i] = reproductionCrossover(weights, firstIndex, secondIndex);
         }
 

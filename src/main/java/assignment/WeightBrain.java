@@ -119,11 +119,11 @@ public class WeightBrain implements Brain {
         for (int j = 0; j < newBoard.getWidth(); j++) {
             metrics[i++] = -2 * (newBoard.getColumnHeight(j) - currentBoard.getColumnHeight(j)); // each column height
         }
-        metrics[i++] = -10 * (countHoles(newBoard) - countHoles(currentBoard));                  // number of holes
-        metrics[i++] = 25 * (newBoard.getRowsCleared() - currentBoard.getRowsCleared());         // number of rows cleared
+        metrics[i++] = -45 * (countHoles(newBoard) - countHoles(currentBoard));                  // number of holes
+        metrics[i++] = 50 * (newBoard.getRowsCleared() - currentBoard.getRowsCleared());         // number of rows cleared
         for (int j = 1; j < newBoard.getWidth(); j++) {
-            metrics[i++] = -3 * (Math.abs(newBoard.getColumnHeight(j) - newBoard.getColumnHeight(j-1))
-                                - Math.abs(currentBoard.getColumnHeight(j) - currentBoard.getColumnHeight(j-1)));  // differences in row height
+            metrics[i++] = -1 * (columnHeight(newBoard, currentBoard, j) * columnHeight (newBoard, currentBoard, j)
+                                * columnHeight (newBoard, currentBoard, j));  // differences in row height
         }
 
         for (int j = 0; j < newBoard.getHeight(); j++) {
@@ -147,6 +147,11 @@ public class WeightBrain implements Brain {
         }
 
         return metrics;
+    }
+
+    private int columnHeight(Board newBoard, Board currentBoard, int j) {
+        return (Math.abs(newBoard.getColumnHeight(j) - newBoard.getColumnHeight(j-1))
+                - Math.abs(currentBoard.getColumnHeight(j) - currentBoard.getColumnHeight(j-1)));
     }
 
     private int countHoles(Board board) {
