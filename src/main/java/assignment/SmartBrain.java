@@ -6,6 +6,25 @@ import java.util.*;
 public class SmartBrain implements Brain {
     private ArrayList<Board> options;
     private ArrayList<Board.Action> firstMoves;
+    private int width, height;
+    private double[] weights;
+    public static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
+    public static int numMetrics = 0;
+
+    public SmartBrain(int width, int height, double[] weights) {
+        // generate a random sequence of weights
+        numMetrics = NUM_PIECE_TYPES + 1 + width + 2 + height + height;
+        this.width = width;
+        this.height = height;
+        if (weights == null) {
+            weights = new double[numMetrics];          // randomly initialize weights
+            for (int i = 0; i < numMetrics; i++) {
+                weights[i] = (Math.random() * 2) - 1;
+            }
+        } else {
+            this.weights = weights;
+        }
+    }
 
     // Decide what the next move should be based on the state of the board.
     public Board.Action nextMove(Board currentBoard) {
@@ -14,12 +33,12 @@ public class SmartBrain implements Brain {
         firstMoves = new ArrayList<>();
         enumerateOptions(currentBoard);
 
-        int best = -Integer.MAX_VALUE;
+        double best = -Integer.MAX_VALUE;
         int bestIndex = 0;
 
         // Check all of the options and get the one with the highest score
         for (int i = 0; i < options.size(); i++) {
-            int score = scoreBoard(options.get(i), currentBoard);
+            double score = scoreBoard(options.get(i), currentBoard);
             if (score > best) {
                 best = score;
                 bestIndex = i;
@@ -76,15 +95,23 @@ public class SmartBrain implements Brain {
     }
 
     // score, higher = better
-    private int scoreBoard(Board newBoard, Board currentBoard, double[] weights) {
-        int rowsCleared = newBoard.getRowsCleared() - currentBoard.getRowsCleared();
-        return 100 - (newBoard.getMaxHeight() * 3) - 7 * holes
-                + 200 * (newBoard.getRowsCleared() - currentBoard.getRowsCleared());
+    private double scoreBoard(Board newBoard, Board currentBoard) {
+        double[] metrics = returnMetrics(newBoard, currentBoard, weights.length);
+        double score = 0;
+        for (int i = 0; i < weights.length; i++) {
+            score += weights[i] * metrics[i];
+        }
+        return score;
     }
 
+        // returns a series of metrics that can be used to calculate the scoreboard
     private double[] returnMetrics(Board newBoard, Board currentBoard, int n) {
         double[] metrics = new double[n];
         int i = 0;
+        int indexOfPieceType = newBoard.getCurrentPiece().getType().ordinal();
+        for (int j = 0; j < NUM_PIECE_TYPES; j++) {        // set the current piece to 1, otherwise to 0
+            metrics[i++] = indexOfPieceType == j ? 1 : 0;
+        }
         metrics[i++] = newBoard.getMaxHeight();                                           // max height
         for (int j = 0; j < newBoard.getWidth(); j++) {
             metrics[i++] = newBoard.getColumnHeight(j) - currentBoard.getColumnHeight(j); // each column height
@@ -94,18 +121,37 @@ public class SmartBrain implements Brain {
         for (int j = 0; j < newBoard.getHeight(); j++) {
             metrics[i++] = newBoard.getRowWidth(j) - currentBoard.getRowWidth(j);         // each row width
         }
-        for (int j = 0; j < newBoard.getHeight(); j++) {
-            boolean pieceFound = false;
-            boolean space = false;
+
+        for (int j = 0; j < newBoard.getHeight(); j++) {                                  // # of open intervals in each row
+            int count = 0;
+            boolean newSpace = false;
+//            boolean oldSpace = false;
             for (int k = 0; k < newBoard.getWidth(); j++) {
                 if (newBoard.getGrid(j, k) != null) {
-                    if (pieceFound) {
-
-                    } else {
-
+                    // there exists a piece here
+                    if (newSpace) {
+                        count++;
                     }
+                    newSpace = false;
+                } else {
+                    // there is no piece here
+                    newSpace = true;
                 }
+
+//                if (currentBoard.getGrid(j, k) != null) {
+//                    // there exists a piece here
+//                    if (oldSpace) {
+//                        count--;
+//                    }
+//                    oldSpace = false;
+//                } else {
+//                    // there is no piece here
+//                    oldSpace = true;
+//                }
             }
+            if (newSpace) count++;
+//            if (oldSpace) count--;
+            metrics[i++] = count;
         }
         return metrics;
     }

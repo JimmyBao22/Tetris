@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/SmartBrain.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/SmartBrain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JTetrisBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JTetrisBrain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/SmartBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/SmartBrain.java" afterDir="false" />
     </list>
@@ -159,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664844493213</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Made SmartBrain smarter">
+      <created>1664940030158</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1664940030158</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -183,6 +185,7 @@
     <MESSAGE value="Track number of rows cleared" />
     <MESSAGE value="Changed 1 comment" />
     <MESSAGE value="Implemented Rotations into brain" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented Rotations into brain" />
+    <MESSAGE value="Made SmartBrain smarter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made SmartBrain smarter" />
   </component>
 </project>
