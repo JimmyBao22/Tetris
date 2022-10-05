@@ -15,7 +15,6 @@ public class JTetrisBrain extends JTetris {
         timer = new javax.swing.Timer(1, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 tick(brain.nextMove(board));
-                System.out.println("hi");
 //                tick(Board.Action.DOWN);
             }
         });

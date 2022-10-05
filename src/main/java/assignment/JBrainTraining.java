@@ -13,14 +13,14 @@ public class JBrainTraining extends JTetris {
         currentBrain = b;
         startGame();
         while (board.getMaxHeight() <= HEIGHT) {
-            System.out.println("not done yet: " + board.getRowsCleared());
+            // System.out.println("not done yet: " + board.getRowsCleared());
             Thread.sleep(1000);
         }
         // now the game is stopped
         return board.getRowsCleared();
     }
 
-    private static final int NUM_AGENTS = 50;
+    private static final int NUM_AGENTS = 20;
     private static final int NUM_RUNS_PER_AGENT = 5;
     private static final int NUM_GENERATIONS = 5;
     private static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
@@ -52,7 +52,7 @@ public class JBrainTraining extends JTetris {
 
                 Arrays.sort(results[weightIndex]);
 
-                medians[weightIndex] = results[weightIndex][results.length / 2];
+                medians[weightIndex] = results[weightIndex][results[0].length / 2];
             }
 
             // find the indices of top brains by median
@@ -62,7 +62,7 @@ public class JBrainTraining extends JTetris {
             Arrays.fill(bestBrainIndices, -Integer.MAX_VALUE);
             for (int i = 0; i < NUM_AGENTS; i++) {
                 for (int j = numTopBrains - 1; j >= 0; j--) {
-                    if (medians[i] <= bestBrainIndices[j]) {
+                    if (medians[i] <= bestBrainIndices[j] || j == 0) {
                         // set it to the previous one, and push those back
                         int currentIndex = i;
                         for (int k = j + 1; k < numTopBrains; k++) {
@@ -134,7 +134,7 @@ public class JBrainTraining extends JTetris {
         createGUI(self);
         try {
             self.train();
-            System.out.println(self.getNumBlocksPlayed(new LameBrain()));
+//            System.out.println(self.getNumBlocksPlayed(new WeightBrain(board.getWidth(), board.getHeight(), weights[weightIndex])));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

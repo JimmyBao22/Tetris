@@ -6,6 +6,7 @@
       <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JTetrisBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JTetrisBrain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +44,20 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.JTetrisBrain">
+  <component name="RunManager" selected="Application.JBrainTraining">
+    <configuration name="JBrainTraining" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.JBrainTraining" />
+      <module name="prog4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="JTetris" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="assignment.JTetris" />
       <module name="prog4" />
@@ -72,6 +86,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.JBrainTraining" />
         <item itemvalue="Application.JTetrisBrain" />
         <item itemvalue="Application.JTetris" />
       </list>
@@ -191,7 +206,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664942679710</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="udated weightbrain and jbraintraining">
+      <created>1664944712023</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1664944712023</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -218,6 +240,7 @@
     <MESSAGE value="Made SmartBrain smarter" />
     <MESSAGE value="Commit Smart Brain metric generation" />
     <MESSAGE value="Commit Weight Brain metric generation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commit Weight Brain metric generation" />
+    <MESSAGE value="udated weightbrain and jbraintraining" />
+    <option name="LAST_COMMIT_MESSAGE" value="udated weightbrain and jbraintraining" />
   </component>
 </project>

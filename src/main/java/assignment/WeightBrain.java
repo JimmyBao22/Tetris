@@ -110,7 +110,8 @@ public class WeightBrain implements Brain {
         double[] metrics = new double[n];
         int i = 0;
         int indexOfPieceType = newBoard.getCurrentPiece().getType().ordinal();
-        for (int j = 0; j < NUM_PIECE_TYPES; j++) {        // set the current piece to 1, otherwise to 0
+        // set the current piece to 1, otherwise to 0. Matters more for matrix rather than vector multiplication
+        for (int j = 0; j < NUM_PIECE_TYPES; j++) {
             metrics[i++] = indexOfPieceType == j ? 1 : 0;
         }
         metrics[i++] = newBoard.getMaxHeight();                                           // max height
@@ -123,12 +124,13 @@ public class WeightBrain implements Brain {
             metrics[i++] = newBoard.getRowWidth(j) - currentBoard.getRowWidth(j);         // each row width
         }
 
-        for (int j = 0; j < newBoard.getHeight(); j++) {                                  // # of open intervals in each row
+        for (int j = 0; j < newBoard.getHeight(); j++) {
+            // # of open intervals in each row
             int count = 0;
             boolean newSpace = false;
 //            boolean oldSpace = false;
-            for (int k = 0; k < newBoard.getWidth(); j++) {
-                if (newBoard.getGrid(j, k) != null) {
+            for (int k = 0; k < newBoard.getWidth(); k++) {
+                if (newBoard.getGrid(k, j) != null) {
                     // there exists a piece here
                     if (newSpace) {
                         count++;
@@ -139,7 +141,7 @@ public class WeightBrain implements Brain {
                     newSpace = true;
                 }
 
-//                if (currentBoard.getGrid(j, k) != null) {
+//                if (currentBoard.getGrid(k, j) != null) {
 //                    // there exists a piece here
 //                    if (oldSpace) {
 //                        count--;
@@ -158,11 +160,9 @@ public class WeightBrain implements Brain {
     }
 
     private int countHoles(Board board) {
-        int width = board.getWidth();
         int countHoles = 0;
-        for (int i = 0; i < width; i++) {
-            int height = board.getColumnHeight(i);
-            for (int j = height; j >= 0; j--) {
+        for (int i = 0; i < board.getWidth(); i++) {
+            for (int j = board.getColumnHeight(i); j >= 0; j--) {
                 if (board.getGrid(i, j) == null) countHoles++;
             }
         }
