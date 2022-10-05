@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/SmartBrain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetrisBrain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/SmartBrain.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/SmartBrain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JTetrisBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JTetrisBrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/SmartBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/SmartBrain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +145,21 @@
       <option name="project" value="LOCAL" />
       <updated>1664754720712</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Implemented Rotations into brain">
+      <created>1664844441169</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1664844441169</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Implemented Rotations into brain">
+      <created>1664844493213</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1664844493213</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -163,6 +182,7 @@
     <MESSAGE value="Fixed rows not clearing correctly" />
     <MESSAGE value="Track number of rows cleared" />
     <MESSAGE value="Changed 1 comment" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed 1 comment" />
+    <MESSAGE value="Implemented Rotations into brain" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented Rotations into brain" />
   </component>
 </project>

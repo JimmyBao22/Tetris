@@ -1,5 +1,6 @@
 package assignment;
 
+import java.awt.*;
 import java.util.*;
 
 public class SmartBrain implements Brain {
@@ -8,12 +9,12 @@ public class SmartBrain implements Brain {
 
     // Decide what the next move should be based on the state of the board.
     public Board.Action nextMove(Board currentBoard) {
-        // Fill the our options array with versions of the new Board
+        // Fill our options array with versions of the new Board
         options = new ArrayList<>();
         firstMoves = new ArrayList<>();
         enumerateOptions(currentBoard);
 
-        int best = 0;
+        int best = -Integer.MAX_VALUE;
         int bestIndex = 0;
 
         // Check all of the options and get the one with the highest score
@@ -75,8 +76,49 @@ public class SmartBrain implements Brain {
     }
 
     // score, higher = better
-    private int scoreBoard(Board newBoard, Board currentBoard) {
-        return 100 - (newBoard.getMaxHeight() * 5)
+    private int scoreBoard(Board newBoard, Board currentBoard, double[] weights) {
+        int rowsCleared = newBoard.getRowsCleared() - currentBoard.getRowsCleared();
+        return 100 - (newBoard.getMaxHeight() * 3) - 7 * holes
                 + 200 * (newBoard.getRowsCleared() - currentBoard.getRowsCleared());
+    }
+
+    private double[] returnMetrics(Board newBoard, Board currentBoard, int n) {
+        double[] metrics = new double[n];
+        int i = 0;
+        metrics[i++] = newBoard.getMaxHeight();                                           // max height
+        for (int j = 0; j < newBoard.getWidth(); j++) {
+            metrics[i++] = newBoard.getColumnHeight(j) - currentBoard.getColumnHeight(j); // each column height
+        }
+        metrics[i++] = countHoles(newBoard) - countHoles(currentBoard);                   // number of holes
+        metrics[i++] = newBoard.getRowsCleared() - currentBoard.getRowsCleared();         // number of rows cleared
+        for (int j = 0; j < newBoard.getHeight(); j++) {
+            metrics[i++] = newBoard.getRowWidth(j) - currentBoard.getRowWidth(j);         // each row width
+        }
+        for (int j = 0; j < newBoard.getHeight(); j++) {
+            boolean pieceFound = false;
+            boolean space = false;
+            for (int k = 0; k < newBoard.getWidth(); j++) {
+                if (newBoard.getGrid(j, k) != null) {
+                    if (pieceFound) {
+
+                    } else {
+
+                    }
+                }
+            }
+        }
+        return metrics;
+    }
+
+    private int countHoles(Board board) {
+        int width = board.getWidth();
+        int countHoles = 0;
+        for (int i = 0; i < width; i++) {
+            int height = board.getColumnHeight(i);
+            for (int j = height; j >= 0; j--) {
+                if (board.getGrid(i, j) == null) countHoles++;
+            }
+        }
+        return countHoles;
     }
 }
