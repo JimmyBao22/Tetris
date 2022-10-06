@@ -59,4 +59,194 @@ public class RotationMovementCheck {
             Assertions.assertTrue(board.equals(board2));
         }
     }
+
+    @Test
+    void testSpecificRotationL() {
+        int width = 2;
+        int height = 2;
+        Point[] before = new Point[] { new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(0, 2) };
+        /*
+
+            x - -   ->   - x x  ->  - - -   ->  - x -
+            x x x   ->   - x -  ->  x x x   ->  - x -
+            - - -   ->   - x -  ->  - - x   ->  x x -
+
+         */
+
+        Point[] after = rotateClockwise(before, width, height);
+        Point[] supposedAfter = new Point[] { new Point(1, 2), new Point(1, 1), new Point(1, 0), new Point(2,2)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+
+        copyArray(before, after);
+        after = rotateClockwise(before, width, height);
+        supposedAfter = new Point[] { new Point(2, 1), new Point(1, 1), new Point(0, 1), new Point(2,0)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+
+        copyArray(before, after);
+        after = rotateClockwise(before, width, height);
+        supposedAfter = new Point[] { new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(0,0)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+    }
+
+    @Test
+    void testSpecificRotationDog() {
+        int width = 2;
+        int height = 2;
+        Point[] before = new Point[] { new Point(0, 1), new Point(1, 1), new Point(1, 2), new Point(2, 2) };
+        /*
+
+            - x x   ->   - x -  ->  - - -   ->  x - -
+            x x -   ->   - x x  ->  - x x   ->  x x -
+            - - -   ->   - - x  ->  x x -   ->  - x -
+
+         */
+
+        Point[] after = rotateClockwise(before, width, height);
+        Point[] supposedAfter = new Point[] { new Point(1, 2), new Point(1, 1), new Point(2, 1), new Point(2,0)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+
+        copyArray(before, after);
+        after = rotateClockwise(before, width, height);
+        supposedAfter = new Point[] { new Point(2, 1), new Point(1, 1), new Point(1, 0), new Point(0,0)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+
+        copyArray(before, after);
+        after = rotateClockwise(before, width, height);
+        supposedAfter = new Point[] { new Point(1, 0), new Point(1, 1), new Point(0, 1), new Point(0,2)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+    }
+
+    @Test
+    void testSpecificRotationT() {
+        int width = 2;
+        int height = 2;
+        Point[] before = new Point[] { new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(1, 2) };
+        /*
+
+            - x -   ->   - x -  ->  - - -   ->  - x -
+            x x x   ->   - x x  ->  x x x   ->  x x -
+            - - -   ->   - x -  ->  - x -   ->  - x -
+
+         */
+
+        Point[] after = rotateClockwise(before, width, height);
+        Point[] supposedAfter = new Point[] { new Point(1, 2), new Point(1, 1), new Point(1, 0), new Point(2,1)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+
+        copyArray(before, after);
+        after = rotateClockwise(before, width, height);
+        supposedAfter = new Point[] { new Point(2, 1), new Point(1, 1), new Point(0, 1), new Point(1,0)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+
+        copyArray(before, after);
+        after = rotateClockwise(before, width, height);
+        supposedAfter = new Point[] { new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(0,1)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+    }
+
+    @Test
+    void testSpecificRotationStick() {
+        int width = 3;
+        int height = 3;
+        Point[] before = new Point[] { new Point(0, 2), new Point(1, 2), new Point(2, 2), new Point(3, 2) };
+        /*
+
+            - - - -  ->   - - x -  ->  - - - -  ->  - x - -
+            x x x x  ->   - - x -  ->  - - - -  ->  - x - -
+            - - - -  ->   - - x -  ->  x x x x  ->  - x - -
+            - - - -  ->   - - x -  ->  - - - -  ->  - x - -
+
+         */
+
+        Point[] after = rotateClockwise(before, width, height);
+        Point[] supposedAfter = new Point[] { new Point(2, 3), new Point(2, 2), new Point(2, 1), new Point(2,0)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+
+        copyArray(before, after);
+        after = rotateClockwise(before, width, height);
+        supposedAfter = new Point[] { new Point(3, 1), new Point(2, 1), new Point(1, 1), new Point(0,1)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+
+        copyArray(before, after);
+        after = rotateClockwise(before, width, height);
+        supposedAfter = new Point[] { new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(1,3)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+    }
+
+    @Test
+    void testSpecificRotationRandom() {
+        int width = 2;
+        int height = 2;
+        Point[] before = new Point[] { new Point(0, 1), new Point(0, 2), new Point(1, 0), new Point(2, 2) };
+        /*
+
+            x - x   ->   - x x  ->  - x -   ->  x - -
+            x - -   ->   x - -  ->  - - x   ->  - - x
+            - x -   ->   - - x  ->  x - x   ->  x x -
+
+         */
+
+        Point[] after = rotateClockwise(before, width, height);
+        Point[] supposedAfter = new Point[] { new Point(1, 2), new Point(2, 2), new Point(0, 1), new Point(2,0)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+
+        copyArray(before, after);
+        after = rotateClockwise(before, width, height);
+        supposedAfter = new Point[] { new Point(2, 1), new Point(2, 0), new Point(1, 2), new Point(0,0)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+
+        copyArray(before, after);
+        after = rotateClockwise(before, width, height);
+        supposedAfter = new Point[] { new Point(1, 0), new Point(0, 0), new Point(2, 1), new Point(0,2)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+    }
+
+    private void copyArray(Point[] a, Point[] b) {
+        for (int i = 0; i < b.length; i++) {
+            a[i] = new Point((int)b[i].getX(), (int)b[i].getY());
+        }
+    }
+
+    private Point[] rotateClockwise(Point[] points, int width, int height) {
+        int pointsLength = points.length;
+        Point[] rotatedPoints = new Point[pointsLength];
+
+        // for each point, translate it to the origin, rotate it, then translate it back
+        for (int i = 0; i < pointsLength; i++) {
+            double translatedY = (points[i].getY() - width / 2.0);
+            double translatedX = (points[i].getX() - height / 2.0);
+            rotatedPoints[i] = new Point((int)(translatedY + width / 2.0), (int)(-translatedX + height / 2.0));
+        }
+        return rotatedPoints;
+    }
 }

@@ -13,7 +13,6 @@ public class CheckInstanceVariables {
     private static final int WIDTH = 10;
     private static final int HEIGHT = 10;
     private static final int TOP_SPACE = 4;
-    private static final int NUM_ITERATIONS = 1000;
     private static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
     @BeforeEach
     void constructRandomBoard() {
