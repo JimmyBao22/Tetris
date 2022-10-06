@@ -73,24 +73,24 @@ public final class TetrisBoard implements Board {
             case LEFT:
                 newPosition = new Point((int)(currentPosition.getX()) - 1, (int)(currentPosition.getY()));
                 // will set lastResult internally
-                movePieceToNewPosition(newPosition);
+                movePieceToNewPosition(body, newPosition);
                 break;
             case RIGHT:
                 newPosition = new Point((int)(currentPosition.getX()) + 1, (int)(currentPosition.getY()));
                 // will set lastResult internally
-                movePieceToNewPosition(newPosition);
+                movePieceToNewPosition(body, newPosition);
                 break;
             case DOWN:
                 newPosition = new Point((int)(currentPosition.getX()), (int)(currentPosition.getY()) - 1);
                 // will set lastResult internally
-                movePieceToNewPosition(newPosition);
+                movePieceToNewPosition(body, newPosition);
                 checkIfPiecePlaced(body);
                 break;
             case DROP:
                 int height = findDropHeight(currentPiece, (int)(currentPosition.getX()));
                 newPosition = new Point((int)(currentPosition.getX()), height);
                 // will set lastResult internally
-                movePieceToNewPosition(newPosition);
+                movePieceToNewPosition(body, newPosition);
                 checkIfPiecePlaced(body);
                 break;
             case CLOCKWISE:
@@ -124,6 +124,7 @@ public final class TetrisBoard implements Board {
         }
 
         // remove the old body
+        setPiece(null, currentPiece.getBody(), currentPosition);
         int sourceRotationIndex = currentPiece.getRotationIndex();
 
         // store the rotated piece
@@ -139,12 +140,15 @@ public final class TetrisBoard implements Board {
                 // we found the rotation + translation that doesn't collide with anything
                 currentPiece = rotatedPiece;
                 currentPosition = newPosition;
+                setPiece(currentPiece, currentPiece.getBody(), currentPosition);
                 lastResult = Result.SUCCESS;
                 return;
             }
         }
 
         // we checked all rotation + translations, none work
+        // put the old body back where it was and report the issue
+        setPiece(currentPiece, currentPiece.getBody(), currentPosition);
         lastResult = Result.OUT_BOUNDS;
     }
 
@@ -187,13 +191,20 @@ public final class TetrisBoard implements Board {
         // checks if the drop height of the piece already equals the current piece's location. If it does,
             // that means the piece is placed.
         if (findDropHeight(currentPiece, (int)(currentPosition.getX())) == (int)(currentPosition.getY())) {
-            setPiece(currentPiece, body, currentPosition);
             updateBlocksFilledAndMaxHeight(body);
             clearRows();
             lastResult = Result.PLACE;
             currentPosition = null;
             currentPiece = null;
         }
+
+//        if (checkPiece(currentPiece, new Point((int)(currentPosition.getX()), (int)(currentPosition.getY())-1)) != 0) {
+//            updateBlocksFilledAndMaxHeight(body);
+//            clearRows();
+//            lastResult = Result.PLACE;
+//            currentPosition = null;
+//            currentPiece = null;
+//        }
     }
 
     // updates the instance variables for max height and blocks filled per column/row
@@ -208,10 +219,16 @@ public final class TetrisBoard implements Board {
     }
 
     // moves the piece to the new position if applicable, and sets the result
-    private void movePieceToNewPosition(Point newPosition) {
+    private void movePieceToNewPosition(Point[] body, Point newPosition) {
         int result = checkPiece(currentPiece, newPosition);
         if (result == 0) {
             // can place the piece in this new position
+
+            // remove the piece from the current position
+            setPiece(null, body, currentPosition);
+
+            // add the piece to the new position
+            setPiece(currentPiece, body, newPosition);
             currentPosition = newPosition;
 
             lastResult = Result.SUCCESS;
@@ -256,6 +273,9 @@ public final class TetrisBoard implements Board {
             printBoard();
             throw new IllegalArgumentException("Piece intersects with existing piece");
         }
+
+        // add the piece to the board if all preconditions are passed
+        setPiece(p, p.getBody(), spawnPosition);
 
         this.currentPiece = p;
         this.currentPosition = spawnPosition;
@@ -361,6 +381,7 @@ public final class TetrisBoard implements Board {
         return height;
     }
 
+    // finds the height this piece will drop down to going dowm from this x position (assuming its the current piece)
     public int findDropHeight(Piece piece, int x) {
         if (piece == null) return 0;
         int[] skirt = piece.getSkirt();
@@ -424,7 +445,7 @@ public final class TetrisBoard implements Board {
     // show the type of the piece at a certain location on the grid, not counting the current piece
     @Override
     public Piece.PieceType getGrid(int x, int y) {
-        if (outOfBounds(x, y) || this.board[x][y] == null) {
+        if (outOfBounds(x, y) || this.board[x][y] == null || isPointOnCurrentPiece(new Point(x, y))) {
             return null;
         } else {
             return this.board[x][y].getType();
