@@ -4,7 +4,6 @@
     <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/assignment/RotationMovementCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/assignment/RotationMovementCheck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weights4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/weights4.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,8 +45,8 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.RotationMovementCheck.testSpecificRotationRandom">
-    <configuration name="RotationMovementCheck.testSpecificRotationDog" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.CheckInstanceVariables.testColumnHeight">
+    <configuration name="CheckInstanceVariables.testColumnHeight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -56,14 +55,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.RotationMovementCheck" />
-      <option name="METHOD_NAME" value="testSpecificRotationDog" />
+      <option name="MAIN_CLASS_NAME" value="assignment.CheckInstanceVariables" />
+      <option name="METHOD_NAME" value="testColumnHeight" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RotationMovementCheck.testSpecificRotationL" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CheckInstanceVariables.testRowWidth" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -72,8 +71,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.RotationMovementCheck" />
-      <option name="METHOD_NAME" value="testSpecificRotationL" />
+      <option name="MAIN_CLASS_NAME" value="assignment.CheckInstanceVariables" />
+      <option name="METHOD_NAME" value="testRowWidth" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -129,11 +128,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CheckInstanceVariables.testColumnHeight" />
+        <item itemvalue="JUnit.CheckInstanceVariables.testRowWidth" />
         <item itemvalue="JUnit.RotationMovementCheck.testSpecificRotationRandom" />
         <item itemvalue="JUnit.RotationMovementCheck.testSpecificRotationStick" />
         <item itemvalue="JUnit.RotationMovementCheck.testSpecificRotationT" />
-        <item itemvalue="JUnit.RotationMovementCheck.testSpecificRotationDog" />
-        <item itemvalue="JUnit.RotationMovementCheck.testSpecificRotationL" />
       </list>
     </recent_temporary>
   </component>
@@ -328,7 +327,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665094083411</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Added tests to check rotations">
+      <created>1665097386681</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1665097386681</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -365,7 +371,8 @@
     <MESSAGE value="Completed writing tests for checking instance variables" />
     <MESSAGE value="Checked tests and fixed equals method in tetris board" />
     <MESSAGE value="Added improved brain training and fixed bugs in board" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added improved brain training and fixed bugs in board" />
+    <MESSAGE value="Added tests to check rotations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added tests to check rotations" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -374,6 +381,15 @@
           <properties class="org.opentest4j.AssertionFailedError" package="org.opentest4j" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="junit.framework.AssertionFailedError" package="junit.framework" />
+          <option name="timeStamp" value="6" />
+        </breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java</url>
+          <line>114</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

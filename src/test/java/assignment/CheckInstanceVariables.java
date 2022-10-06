@@ -14,36 +14,43 @@ public class CheckInstanceVariables {
     private static final int HEIGHT = 10;
     private static final int TOP_SPACE = 4;
     private static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
-    @BeforeEach
-    void constructRandomBoard() {
+
+    TetrisBoard makeRandomBoard() {
+        TetrisBoard newBoard;
         outer: while (true) {
-            this.board = new TetrisBoard(WIDTH, HEIGHT + TOP_SPACE);
+            newBoard = new TetrisBoard(WIDTH, HEIGHT + TOP_SPACE);
 
             // place 5 random blocks
             for (int j = 0; j < 5; j++) {
                 Piece piece = getRandomRotatedPiece();
 
-                board.nextPiece(piece, new Point(board.getWidth() / 2 - piece.getWidth() / 2, HEIGHT));
+                newBoard.nextPiece(piece, new Point(newBoard.getWidth() / 2 - piece.getWidth() / 2, HEIGHT));
 
                 int move = (int) (Math.random() * 10) - 5;
                 while (move < 0) {
-                    board.move(Board.Action.RIGHT);
+                    newBoard.move(Board.Action.RIGHT);
                     move++;
                 }
 
                 while (move > 0) {
-                    board.move(Board.Action.LEFT);
+                    newBoard.move(Board.Action.LEFT);
                     move--;
                 }
 
-                if (board.dropHeight(piece, (int) (board.getCurrentPiecePosition().getX())) + piece.getHeight() >= HEIGHT) {
+                if (newBoard.dropHeight(piece, (int) (newBoard.getCurrentPiecePosition().getX())) + piece.getHeight() >= HEIGHT) {
                     continue outer;
                 }
-                board.move(Board.Action.DROP);
+                newBoard.move(Board.Action.DROP);
             }
 
             break;
         }
+
+        return newBoard;
+    }
+    @BeforeEach
+    void constructRandomBoard() {
+        this.board = makeRandomBoard();
     }
 
     private Piece getRandomPiece() {
@@ -84,8 +91,6 @@ public class CheckInstanceVariables {
         rotationIndex += 4;
         rotationIndex %= 4;
         Assertions.assertEquals(rotationIndex, piece.getRotationIndex());
-
-
     }
 
     // TODO failed 11 out of 10,000 tests
@@ -101,6 +106,7 @@ public class CheckInstanceVariables {
     // TODO failed 7 out of 10,000 tests
     @RepeatedTest(10000)
     void testColumnHeight() {
+        board = makeRandomBoard();
         for (int j = 0; j < board.getWidth(); j++) {
             int columnHeight = -1;
             for (int k = 0; k < board.getHeight(); k++) {
