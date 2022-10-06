@@ -252,7 +252,7 @@ public final class TetrisBoard implements Board {
             throw new IllegalArgumentException("Piece is out of bounds");
         }
         if (result == 2) {
-            // TODO delete this print
+            // TODO delete this print after fixing error
             printBoard();
             throw new IllegalArgumentException("Piece intersects with existing piece");
         }
@@ -346,7 +346,7 @@ public final class TetrisBoard implements Board {
     // determine the height at which a piece would rest if dropped at in a given column
     @Override
     public int dropHeight(Piece piece, int x) {
-        if (outOfBounds(x, 0) || piece == null) return 0;
+        if (piece == null) return 0;
         int[] skirt = piece.getSkirt();
         int height = 0;
 
@@ -362,7 +362,7 @@ public final class TetrisBoard implements Board {
     }
 
     public int findDropHeight(Piece piece, int x) {
-        if (outOfBounds(x, 0) || piece == null) return 0;
+        if (piece == null) return 0;
         int[] skirt = piece.getSkirt();
 
         // find the minimum value of the skirt, so that point can be placed at the bottom
