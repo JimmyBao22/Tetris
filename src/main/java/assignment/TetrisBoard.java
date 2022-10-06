@@ -316,12 +316,23 @@ public final class TetrisBoard implements Board {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if (!this.board[i][j].equals(otherBoard.board[i][j])) {
+                // TODO update based on piazza
+                if (this.board[i][j] == null) {
+                    if (otherBoard.board[i][j] != null) {
+                        return false;
+                    }
+                } else if (!this.board[i][j].equals(otherBoard.board[i][j])) {
                     return false;
                 }
             }
         }
 
+        if (this.getCurrentPiece() == null) {
+            return otherBoard.getCurrentPiece() == null;
+        }
+        if (this.getCurrentPiecePosition() == null) {
+            return otherBoard.getCurrentPiecePosition() == null;
+        }
         // ensure they have the same current piece at the same location
         return this.getCurrentPiece().equals(otherBoard.getCurrentPiece()) &&
                 this.getCurrentPiecePosition().equals(otherBoard.getCurrentPiecePosition());

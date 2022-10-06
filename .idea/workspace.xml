@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/assignment/RotationMovementCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/assignment/RotationMovementCheck.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,9 +46,9 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.CheckInstanceVariables.testRowWidth">
-    <configuration name="JTetris" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="assignment.JTetris" />
+  <component name="RunManager" selected="JUnit.RotationMovementCheck.testMovements">
+    <configuration name="RotationMovementCheck" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.RotationMovementCheck" />
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -90,22 +92,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CheckInstanceVariables.testRotation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="prog4" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="assignment.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.CheckInstanceVariables" />
-      <option name="METHOD_NAME" value="testRotation" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="CheckInstanceVariables.testRowWidth" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prog4" />
       <extension name="coverage">
@@ -122,13 +108,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="RotationMovementCheck.testMovements" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="prog4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="assignment" />
+      <option name="MAIN_CLASS_NAME" value="assignment.RotationMovementCheck" />
+      <option name="METHOD_NAME" value="testMovements" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.RotationMovementCheck.testMovements" />
+        <item itemvalue="Application.RotationMovementCheck" />
         <item itemvalue="JUnit.CheckInstanceVariables.testRowWidth" />
         <item itemvalue="JUnit.CheckInstanceVariables.testColumnHeight" />
         <item itemvalue="JUnit.CheckInstanceVariables.testMaxHeight" />
-        <item itemvalue="JUnit.CheckInstanceVariables.testRotation" />
-        <item itemvalue="Application.JTetris" />
       </list>
     </recent_temporary>
   </component>
@@ -302,7 +304,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665028703567</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Completed writing tests for checking instance variables">
+      <created>1665037817367</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1665037817367</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -336,7 +345,8 @@
     <MESSAGE value="Created second brain with altered training approach" />
     <MESSAGE value="Added checks for null objects and fixed certain bugs" />
     <MESSAGE value="Fixed dropping bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed dropping bug" />
+    <MESSAGE value="Completed writing tests for checking instance variables" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed writing tests for checking instance variables" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

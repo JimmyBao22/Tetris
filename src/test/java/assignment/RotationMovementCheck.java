@@ -1,14 +1,15 @@
 package assignment;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 
 public class RotationMovementCheck {
 
-    @Test
-    public static void main(String[] args) {
+    @RepeatedTest(10000)
+    void testMovements() {
 
         int width = 10;
         int height = 10;
