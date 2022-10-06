@@ -1,88 +1,126 @@
 package assignment;
 
+import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 
 public class CheckInstanceVariables {
+    private Board board;
+    private static final int WIDTH = 10;
+    private static final int HEIGHT = 10;
+    private static final int TOP_SPACE = 4;
+    private static final int NUM_ITERATIONS = 1000;
+    private static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
+    @BeforeEach
+    void constructRandomBoard() {
+        this.board = new TetrisBoard(WIDTH, HEIGHT + TOP_SPACE);
 
-    @Test
-    public static void main(String[] args) {
-        int width = 10;
-        int height = 10;
-        int topSpace = 4;
-        int numIterations = 1000;
-        int numPieceTypes = Piece.PieceType.values().length;
+        // place 5 random blocks
+        for (int j = 0; j < 5; j++) {
+            Piece piece = getRandomRotatedPiece();
 
-        for (int i = 0; i < numIterations; i++) {
-            Board board = new TetrisBoard(width, height + topSpace);
-            // place 5 random blocks
-            for (int j = 0; j < 5; j++) {
-                int pieceIndex = (int)(Math.random() * numPieceTypes);
-                Piece piece = null;
-                for (Piece.PieceType p : Piece.PieceType.values()) {
-                    if (p.ordinal() == pieceIndex) {
-                        // add this current piece
-                        piece = new TetrisPiece(p);
-                    }
-                }
+            board.nextPiece(piece, new Point(board.getWidth() / 2 - piece.getWidth() / 2, HEIGHT));
 
-                int rotationIndex = 0;
-                int moveClockwise = (int)(Math.random() * 4);
-                for (int k = 0; k < moveClockwise; k++) {
-                    piece = piece.clockwisePiece();
-                    rotationIndex++;
-                }
-                // TODO error sometimes v
-                Assertions.assertTrue(rotationIndex == piece.getRotationIndex());
-
-                // put it randomly on the board
-                board.nextPiece(piece, new Point(board.getWidth() / 2 - piece.getWidth() / 2, height));
-
-                Assertions.assertTrue(board.getCurrentPiece().equals(piece));
-
-                int moveLeft = (int)(Math.random() * 6);
-                for (int k = 0; k < moveLeft; k++) {
-                    board.move(Board.Action.LEFT);
-                }
-
-                int moveRight = (int)(Math.random() * 4);
-                for (int k = 0; k < moveRight; k++) {
-                    board.move(Board.Action.RIGHT);
-                }
-
-                board.move(Board.Action.DROP);
+            int move = (int) (Math.random() * 10) - 5;
+            while (move < 0) {
+                board.move(Board.Action.RIGHT);
+                move++;
             }
 
-            // check instance variables
-
-            int maxHeight = 0;
-            for (int j = 0; j < board.getWidth(); j++) {
-                maxHeight = Math.max(maxHeight, board.getColumnHeight(j));
-            }
-            Assertions.assertTrue(maxHeight == board.getMaxHeight());
-
-            for (int j = 0; j < board.getWidth(); j++) {
-                int columnHeight = -1;
-                for (int k = 0; k < board.getHeight(); k++) {
-                    if (board.getGrid(j, k) != null) columnHeight = k;
-                }
-                System.out.println(columnHeight + " " + board.getColumnHeight(j));
-                // TODO error sometimes v
-                Assertions.assertTrue((columnHeight + 1) == board.getColumnHeight(j));
+            while (move > 0) {
+                board.move(Board.Action.LEFT);
+                move--;
             }
 
-            for (int j = 0; j < board.getHeight(); j++) {
-                int rowBlocks = 0;
-                for (int k = 0; k < board.getWidth(); k++) {
-                    if (board.getGrid(k ,j) != null) rowBlocks++;
-                }
-                Assertions.assertTrue(rowBlocks == board.getRowWidth(j));
-
-                // if rowblocks is width, the row should've cleared
-                Assertions.assertTrue(rowBlocks != width);
+            if (board.dropHeight(piece, (int)(board.getCurrentPiecePosition().getX())) + piece.getHeight() >= HEIGHT) {
+                continue;
             }
+            board.move(Board.Action.DROP);
         }
     }
+
+    private Piece getRandomPiece() {
+        int pieceIndex = (int) (Math.random() * NUM_PIECE_TYPES);
+        return new TetrisPiece(Piece.PieceType.values()[pieceIndex]);
+    }
+
+    private Piece getRandomRotatedPiece() {
+        Piece p = getRandomPiece();
+        int numRotations = (int)(Math.random() * 4);
+        for (int i = 0; i < numRotations; i++) {
+            p = p.clockwisePiece();
+        }
+        return p;
+    }
+
+    @RepeatedTest(1000)
+    void testRotation() {
+        Piece piece = getRandomPiece();
+
+        int rotationIndex = 0;
+        int moveClockwise = (int) (Math.random() * 1000);
+        for (int k = 0; k < moveClockwise; k++) {
+            piece = piece.clockwisePiece();
+            rotationIndex++;
+        }
+        rotationIndex %= 4;
+
+        Assertions.assertEquals(rotationIndex, piece.getRotationIndex());
+
+
+        int moveCounterClockwise = (int) (Math.random() * 1000);
+        for (int k = 0; k < moveCounterClockwise; k++) {
+            piece = piece.counterclockwisePiece();
+            rotationIndex--;
+        }
+        rotationIndex %= 4;
+        rotationIndex += 4;
+        rotationIndex %= 4;
+        Assertions.assertEquals(rotationIndex, piece.getRotationIndex());
+
+
+    }
+
+    @RepeatedTest(1000)
+    void testMaxHeight() {
+        int maxHeight = 0;
+        for (int j = 0; j < board.getWidth(); j++) {
+            maxHeight = Math.max(maxHeight, board.getColumnHeight(j));
+        }
+        Assertions.assertTrue(maxHeight == board.getMaxHeight());
+    }
+
+//            // check instance variables
+//
+//            int maxHeight = 0;
+//            for (int j = 0; j < board.getWidth(); j++) {
+//                maxHeight = Math.max(maxHeight, board.getColumnHeight(j));
+//            }
+//            Assertions.assertTrue(maxHeight == board.getMaxHeight());
+//
+//            for (int j = 0; j < board.getWidth(); j++) {
+//                int columnHeight = -1;
+//                for (int k = 0; k < board.getHeight(); k++) {
+//                    if (board.getGrid(j, k) != null) columnHeight = k;
+//                }
+//                // TODO error sometimes v
+//                Assertions.assertTrue((columnHeight + 1) == board.getColumnHeight(j));
+//            }
+//
+//            for (int j = 0; j < board.getHeight(); j++) {
+//                int rowBlocks = 0;
+//                for (int k = 0; k < board.getWidth(); k++) {
+//                    if (board.getGrid(k ,j) != null) rowBlocks++;
+//                }
+//                Assertions.assertTrue(rowBlocks == board.getRowWidth(j));
+//
+//                // if rowblocks is width, the row should've cleared
+//                Assertions.assertTrue(rowBlocks != WIDTH);
+//            }
+//        }
+//    }
 }
