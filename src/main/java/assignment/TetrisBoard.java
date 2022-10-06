@@ -116,11 +116,11 @@ public final class TetrisBoard implements Board {
     // try to rotate the current piece, set last result to success or out of bounds
     private void rotateCurrentPiece(boolean clockwise) {
         // store which wallkicks to use depending on piece type and rotation direction
-        Point[][] wallkickLookup;
+        Point[][] wallKickLookup;
         if (currentPiece.getType() == Piece.PieceType.STICK) {
-            wallkickLookup = clockwise ? Piece.I_CLOCKWISE_WALL_KICKS : Piece.I_COUNTERCLOCKWISE_WALL_KICKS;
+            wallKickLookup = clockwise ? Piece.I_CLOCKWISE_WALL_KICKS : Piece.I_COUNTERCLOCKWISE_WALL_KICKS;
         } else {
-            wallkickLookup = clockwise ? Piece.NORMAL_CLOCKWISE_WALL_KICKS : Piece.NORMAL_COUNTERCLOCKWISE_WALL_KICKS;
+            wallKickLookup = clockwise ? Piece.NORMAL_CLOCKWISE_WALL_KICKS : Piece.NORMAL_COUNTERCLOCKWISE_WALL_KICKS;
         }
 
         // remove the old body
@@ -131,7 +131,7 @@ public final class TetrisBoard implements Board {
         Piece rotatedPiece = clockwise ? currentPiece.clockwisePiece() : currentPiece.counterclockwisePiece();
 
         // try all the wallkick displacements
-        for (Point potentialMovement : wallkickLookup[sourceRotationIndex]) {
+        for (Point potentialMovement : wallKickLookup[sourceRotationIndex]) {
             int newX = (int) (currentPosition.getX() + potentialMovement.getX());
             int newY = (int) (currentPosition.getY() + potentialMovement.getY());
 
@@ -158,7 +158,7 @@ public final class TetrisBoard implements Board {
         for (int i = currentPiece.getHeight() - 1; i >= 0; i--) {
             int y = (int) (currentPosition.getY()) + i;
             // if this row is full
-            if (y >= 0 && y < getWidth() && (getRowWidth(y) == getWidth())) {
+            if (y >= 0 && y < getHeight() && (getRowWidth(y) == getWidth())) {
                 // replace every cell with the contents of the one above
                 for (int x = 0; x < getWidth(); x++) {
                     for (int row = y; row < getHeight() - 1; row++) {
@@ -251,7 +251,7 @@ public final class TetrisBoard implements Board {
     // Put a new piece on the board
     @Override
     public void nextPiece(Piece p, Point spawnPosition) {
-        if (p == null || spawnPosition == null || outOfBounds((int)(spawnPosition.getX()), (int)(spawnPosition.getY()))) {
+        if (p == null || spawnPosition == null) {
             throw new IllegalArgumentException("Piece does not exist on board");
         }
 
@@ -274,7 +274,7 @@ public final class TetrisBoard implements Board {
 
     // adds a piece p to the given position. If you want to remove a piece, then a null piece can be passed in
     private void setPiece(Piece p, Point[] body, Point position) {
-        if (p == null || body == null || position == null) return;
+        if (body == null || position == null) return;
 
         for (int i = 0; i < body.length; i++) {
             int x = (int) (position.getX() + body[i].getX());
