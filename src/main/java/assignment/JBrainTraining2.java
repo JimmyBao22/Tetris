@@ -22,14 +22,14 @@ public class JBrainTraining2 extends JTetris {
         return count;
     }
 
-    private static final int NUM_AGENTS = 100;
+    private static final int NUM_AGENTS = 500;
     private static final int NUM_RUNS_PER_AGENT = 3;
-    private static final int NUM_GENERATIONS = 10;
+    private static final int NUM_GENERATIONS = 5;
     private static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
     private int numTopBrains;
     private static int numMetrics;
     private double[][] weights;
-    private static final String FILE_NAME = "weights3.txt";
+    private static final String FILE_NAME = "weights2.txt";
 
     private double[][] makeRandomStartingWeights() {
         double[][] randomWeights = new double[NUM_AGENTS][numMetrics];
@@ -67,11 +67,10 @@ public class JBrainTraining2 extends JTetris {
             // find the indices of top brains by median
             numTopBrains = 10;
             int[] bestBrainIndices = new int[numTopBrains];
-            int i = 0;
-            for (; i < numTopBrains && i < NUM_AGENTS; i++) {
+            for (int i = 0; i < numTopBrains && i < NUM_AGENTS; i++) {
                 bestBrainIndices[i] = i;
             }
-            for (; i < NUM_AGENTS; i++) {
+            for (int i = numTopBrains; i < NUM_AGENTS; i++) {
                 for (int j = numTopBrains - 1; j >= 0; j--) {
                     if (medians[i] <= bestBrainIndices[j]) {
                         // set it to the previous one, and push those back
@@ -126,27 +125,28 @@ public class JBrainTraining2 extends JTetris {
         for (int j = 0; j < numTopBrains; j++) {
             for (int k = 0; k < numTopBrains; k++) {
                 if (j != k && i < NUM_AGENTS) {
-                    updatedWeights[i++] = reproductionCrossover(weights, j, k);
+                    updatedWeights[i++] = reproductionCrossover(weights, j, k, 0.1);
                 }
             }
         }
 
         for (; i < NUM_AGENTS; i++) {
-            int firstIndex = (int)(Math.random() * 5);
-            int secondIndex = (int)(Math.random() * 5);    // note: can be same (design decision)
-            updatedWeights[i] = reproductionCrossover(weights, firstIndex, secondIndex);
+            // note: indices can be same (design decision)
+            int firstIndex = (int)(Math.random() * numTopBrains);
+            int secondIndex = (int)(Math.random() * numTopBrains);
+            updatedWeights[i] = reproductionCrossover(weights, firstIndex, secondIndex, 0.3);
         }
 
         return updatedWeights;
     }
 
-    private double[] reproductionCrossover(double[][] weights, int indexOne, int indexTwo) {
+    private double[] reproductionCrossover(double[][] weights, int indexOne, int indexTwo, double randomFactor) {
         // create a crossover between the weights of indexOne and indexTwo, with added randomness for a mutation
         double[] reproducedWeights = new double[numMetrics];
         double chooseOneProb = 0.75;
         for (int i = 0; i < numMetrics; i++) {
-            if (Math.random() < 0.1) {
-                // with a 10% chance, set it to a random variable
+            if (Math.random() < randomFactor) {
+                // with a random factor chance, set it to a random variable
                 reproducedWeights[i] = 20 * Math.random() - 10;
             } else {
                 // with a chooseOneProb chance, choose the weight of index one

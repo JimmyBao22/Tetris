@@ -3,7 +3,7 @@ package assignment;
 import java.awt.*;
 import java.util.*;
 
-public class WeightBrain implements Brain {
+public class WeightBrain3 implements Brain {
     private ArrayList<Board> options;
     private ArrayList<Board.Action> firstMoves;
     private int width, height;
@@ -11,7 +11,7 @@ public class WeightBrain implements Brain {
     private static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
     private static int numMetrics = 0;
 
-    public WeightBrain(int width, int height, double[] weights) {
+    public WeightBrain3(int width, int height, double[] weights) {
         // generate a random sequence of weights
         numMetrics = NUM_PIECE_TYPES + 1 + width + 2 + width - 1 + height;
         this.width = width;
@@ -119,11 +119,11 @@ public class WeightBrain implements Brain {
         for (int j = 0; j < newBoard.getWidth(); j++) {
             metrics[i++] = -2 * (newBoard.getColumnHeight(j) - currentBoard.getColumnHeight(j)); // each column height
         }
-        metrics[i++] = -50 * (countHoles(newBoard) - countHoles(currentBoard));                  // number of holes
+        metrics[i++] = -300 * (countHoles(newBoard) - countHoles(currentBoard));                  // number of holes
         metrics[i++] = 50 * (newBoard.getRowsCleared() - currentBoard.getRowsCleared());         // number of rows cleared
         for (int j = 1; j < newBoard.getWidth(); j++) {
             metrics[i++] = -1 * (columnHeight(newBoard, currentBoard, j) * columnHeight (newBoard, currentBoard, j)
-                                * columnHeight (newBoard, currentBoard, j));  // differences in row height
+                    * columnHeight (newBoard, currentBoard, j));  // differences in row height
         }
 
         for (int j = 0; j < newBoard.getHeight(); j++) {

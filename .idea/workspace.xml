@@ -2,10 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining3.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain3.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weights4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_28_22,_8_59_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_28_22__8_59_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetris.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetris.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/assignment/RotationMovementCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/assignment/RotationMovementCheck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JTetris.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JTetris.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weights.txt" beforeDir="false" afterPath="$PROJECT_DIR$/weights.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weights2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/weights2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weights3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/weights3.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +57,46 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.RotationMovementCheck.testMovements">
+  <component name="RunManager" selected="Application.JBrainTraining3">
+    <configuration name="JBrainTraining" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.JBrainTraining" />
+      <module name="prog4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JBrainTraining2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.JBrainTraining2" />
+      <module name="prog4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JBrainTraining3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.JBrainTraining3" />
+      <module name="prog4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="RotationMovementCheck" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="assignment.RotationMovementCheck" />
       <module name="prog4" />
@@ -56,54 +106,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CheckInstanceVariables.testColumnHeight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="prog4" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="assignment.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.CheckInstanceVariables" />
-      <option name="METHOD_NAME" value="testColumnHeight" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CheckInstanceVariables.testMaxHeight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="prog4" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="assignment.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.CheckInstanceVariables" />
-      <option name="METHOD_NAME" value="testMaxHeight" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CheckInstanceVariables.testRowWidth" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="prog4" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="assignment.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.CheckInstanceVariables" />
-      <option name="METHOD_NAME" value="testRowWidth" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -126,11 +128,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.JBrainTraining3" />
+        <item itemvalue="Application.JBrainTraining" />
+        <item itemvalue="Application.JBrainTraining2" />
         <item itemvalue="JUnit.RotationMovementCheck.testMovements" />
         <item itemvalue="Application.RotationMovementCheck" />
-        <item itemvalue="JUnit.CheckInstanceVariables.testRowWidth" />
-        <item itemvalue="JUnit.CheckInstanceVariables.testColumnHeight" />
-        <item itemvalue="JUnit.CheckInstanceVariables.testMaxHeight" />
       </list>
     </recent_temporary>
   </component>
@@ -311,7 +313,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665037817367</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Checked tests and fixed equals method in tetris board">
+      <created>1665038139562</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1665038139562</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -346,7 +355,8 @@
     <MESSAGE value="Added checks for null objects and fixed certain bugs" />
     <MESSAGE value="Fixed dropping bug" />
     <MESSAGE value="Completed writing tests for checking instance variables" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed writing tests for checking instance variables" />
+    <MESSAGE value="Checked tests and fixed equals method in tetris board" />
+    <option name="LAST_COMMIT_MESSAGE" value="Checked tests and fixed equals method in tetris board" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
