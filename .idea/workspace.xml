@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="Fixed setPiece null check">
+    <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java" afterDir="false" />
     </list>
@@ -44,7 +44,7 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.CheckInstanceVariables.testMaxHeight">
+  <component name="RunManager" selected="JUnit.CheckInstanceVariables.testRowWidth">
     <configuration name="JTetris" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="assignment.JTetris" />
       <module name="prog4" />
@@ -58,15 +58,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in prog4" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="prog4" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CheckInstanceVariables" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CheckInstanceVariables.testColumnHeight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -76,7 +68,8 @@
       </extension>
       <option name="PACKAGE_NAME" value="assignment" />
       <option name="MAIN_CLASS_NAME" value="assignment.CheckInstanceVariables" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="METHOD_NAME" value="testColumnHeight" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -113,12 +106,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CheckInstanceVariables.testRowWidth" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="prog4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="assignment" />
+      <option name="MAIN_CLASS_NAME" value="assignment.CheckInstanceVariables" />
+      <option name="METHOD_NAME" value="testRowWidth" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CheckInstanceVariables.testRowWidth" />
+        <item itemvalue="JUnit.CheckInstanceVariables.testColumnHeight" />
         <item itemvalue="JUnit.CheckInstanceVariables.testMaxHeight" />
         <item itemvalue="JUnit.CheckInstanceVariables.testRotation" />
-        <item itemvalue="JUnit.CheckInstanceVariables" />
-        <item itemvalue="JUnit.All in prog4" />
         <item itemvalue="Application.JTetris" />
       </list>
     </recent_temporary>
@@ -293,14 +302,7 @@
       <option name="project" value="LOCAL" />
       <updated>1665028703567</updated>
     </task>
-    <task id="LOCAL-00024" summary="Fixed setPiece null check">
-      <created>1665035280557</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1665035280557</updated>
-    </task>
-    <option name="localTasksCounter" value="25" />
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -334,8 +336,7 @@
     <MESSAGE value="Created second brain with altered training approach" />
     <MESSAGE value="Added checks for null objects and fixed certain bugs" />
     <MESSAGE value="Fixed dropping bug" />
-    <MESSAGE value="Fixed setPiece null check" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed setPiece null check" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed dropping bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -343,10 +344,6 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="org.opentest4j.AssertionFailedError" package="org.opentest4j" />
           <option name="timeStamp" value="1" />
-        </breakpoint>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.IllegalArgumentException" package="java.lang" />
-          <option name="timeStamp" value="7" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
