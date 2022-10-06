@@ -95,7 +95,7 @@ public class JTetris extends JComponent {
     protected javax.swing.Timer timer;
     protected JSlider speed;
 
-    public final int DELAY = 1;    // milliseconds per tick
+    public final int DELAY = 1000;    // milliseconds per tick
 
     // The 7 canonical tetris pieces.
     public final Piece[] PIECES = new Piece[] {
@@ -186,7 +186,7 @@ public class JTetris extends JComponent {
         board = new TetrisBoard(WIDTH, HEIGHT + TOP_SPACE);
 
         // draw the new board state once
-//        repaint();
+        repaint();
 
         count = 0;
         gameOn = true;
@@ -272,7 +272,7 @@ public class JTetris extends JComponent {
             break;
         }
 
-//        repaint();
+        repaint();
     }
 
     /**

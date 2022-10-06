@@ -22,14 +22,14 @@ public class JBrainTraining2 extends JTetris {
         return count;
     }
 
-    private static final int NUM_AGENTS = 500;
+    private static final int NUM_AGENTS = 100;
     private static final int NUM_RUNS_PER_AGENT = 3;
-    private static final int NUM_GENERATIONS = 50;
+    private static final int NUM_GENERATIONS = 10;
     private static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
     private int numTopBrains;
     private static int numMetrics;
     private double[][] weights;
-    private static final String FILE_NAME = "weights2.txt";
+    private static final String FILE_NAME = "weights3.txt";
 
     private double[][] makeRandomStartingWeights() {
         double[][] randomWeights = new double[NUM_AGENTS][numMetrics];
