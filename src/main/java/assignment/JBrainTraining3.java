@@ -29,7 +29,7 @@ public class JBrainTraining3 extends JTetris {
     private int numTopBrains;
     private static int numMetrics;
     private double[][] weights;
-    private static final String FILE_NAME = "weights4.txt";
+    private static final String FILE_NAME = "weights5.txt";
 
     private double[][] makeRandomStartingWeights() {
         double[][] randomWeights = new double[NUM_AGENTS][numMetrics];

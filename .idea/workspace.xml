@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="">
+    <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="Fixed small bugs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/assignment/RotationMovementCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/assignment/RotationMovementCheck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weights4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/weights4.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +48,7 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.RotationMovementCheck.testSkirtStick">
+  <component name="RunManager" selected="Application.JBrainTraining3">
     <configuration name="JBrainTraining3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="assignment.JBrainTraining3" />
       <module name="prog4" />
@@ -59,7 +62,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RotationMovementCheck.testSkirtDog" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CheckInstanceVariables.testColumnHeight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -68,14 +71,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.RotationMovementCheck" />
-      <option name="METHOD_NAME" value="testSkirtDog" />
+      <option name="MAIN_CLASS_NAME" value="assignment.CheckInstanceVariables" />
+      <option name="METHOD_NAME" value="testColumnHeight" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RotationMovementCheck.testSkirtL" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CheckInstanceVariables.testMaxHeight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -84,8 +87,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.RotationMovementCheck" />
-      <option name="METHOD_NAME" value="testSkirtL" />
+      <option name="MAIN_CLASS_NAME" value="assignment.CheckInstanceVariables" />
+      <option name="METHOD_NAME" value="testMaxHeight" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -125,11 +128,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.JBrainTraining3" />
+        <item itemvalue="JUnit.CheckInstanceVariables.testMaxHeight" />
+        <item itemvalue="JUnit.CheckInstanceVariables.testColumnHeight" />
         <item itemvalue="JUnit.RotationMovementCheck.testSkirtStick" />
         <item itemvalue="JUnit.RotationMovementCheck.testSkirtT" />
-        <item itemvalue="JUnit.RotationMovementCheck.testSkirtDog" />
-        <item itemvalue="JUnit.RotationMovementCheck.testSkirtL" />
-        <item itemvalue="Application.JBrainTraining3" />
       </list>
     </recent_temporary>
   </component>
@@ -338,7 +341,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665098692010</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Added testing for skirt">
+      <created>1665099869354</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1665099869354</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -377,7 +387,8 @@
     <MESSAGE value="Added improved brain training and fixed bugs in board" />
     <MESSAGE value="Added tests to check rotations" />
     <MESSAGE value="Errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Errors" />
+    <MESSAGE value="Added testing for skirt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added testing for skirt" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

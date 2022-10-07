@@ -93,8 +93,7 @@ public class CheckInstanceVariables {
         Assertions.assertEquals(rotationIndex, piece.getRotationIndex());
     }
 
-    // TODO failed 11 out of 10,000 tests
-    @RepeatedTest(1000)
+    @RepeatedTest(10000)
     void testMaxHeight() {
         int maxHeight = 0;
         for (int j = 0; j < board.getWidth(); j++) {
@@ -103,7 +102,6 @@ public class CheckInstanceVariables {
         Assertions.assertTrue(maxHeight == board.getMaxHeight());
     }
 
-    // TODO failed 7 out of 10,000 tests
     @RepeatedTest(10000)
     void testColumnHeight() {
         board = makeRandomBoard();

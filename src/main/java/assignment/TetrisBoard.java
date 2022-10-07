@@ -191,10 +191,10 @@ public final class TetrisBoard implements Board {
         // checks if the drop height of the piece already equals the current piece's location. If it does,
         // that means the piece is placed.
         if (findDropHeight(currentPiece, (int)(currentPosition.getX())) == (int)(currentPosition.getY())) {
+            updateBlocksFilledAndMaxHeight();
             clearRows();
             currentPosition = null;
             currentPiece = null;
-            updateBlocksFilledAndMaxHeight();
             lastResult = Result.PLACE;
         }
     }
@@ -206,7 +206,7 @@ public final class TetrisBoard implements Board {
         for (int x = 0; x < getWidth(); x++) {
             blocksFilledPerColumn[x] = 0;
             for (int y = 0; y < getHeight(); y++) {
-                if (getGrid(x, y) != null) {
+                if (getGrid(x, y) != null || isPointOnCurrentPiece(new Point(x, y))) {
                     blocksFilledPerColumn[x] = (y + 1);
                     blocksFilledPerRow[y]++;
                 }
