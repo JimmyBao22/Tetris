@@ -14,7 +14,6 @@ public class JBrainTraining extends JTetris {
         currentBrain = b;
         startGame();
         while (board.getMaxHeight() <= HEIGHT) {
-            // System.out.println("not done yet: " + board.getRowsCleared());
             Thread.sleep(10);
         }
         // now the game is stopped
@@ -28,7 +27,7 @@ public class JBrainTraining extends JTetris {
     private int numTopBrains;
     private static int numMetrics;
     private double[][] weights;
-    private static final String FILE_NAME = "weights5.txt";
+    private static final String FILE_NAME = "src/main/java/assignment/weights.txt";
 
     private double[][] makeRandomStartingWeights() {
         double[][] randomWeights = new double[NUM_AGENTS][numMetrics];
@@ -56,10 +55,6 @@ public class JBrainTraining extends JTetris {
 
                 Arrays.sort(results[weightIndex]);
 
-//                for (int j = 0; j < NUM_RUNS_PER_AGENT; j++) {
-//                    averages[weightIndex] += results[weightIndex][j];
-//                }
-//                averages[weightIndex] /= NUM_RUNS_PER_AGENT;
                 medians[weightIndex] = results[weightIndex][NUM_RUNS_PER_AGENT / 2];
             }
 
@@ -176,11 +171,11 @@ public class JBrainTraining extends JTetris {
             JBrainTraining self = new JBrainTraining();
             createGUI(self);
             self.train();
-//            System.out.println(self.getNumBlocksPlayed(new WeightBrain(board.getWidth(), board.getHeight(), weights[weightIndex])));
         } catch (InterruptedException | IOException e) {
             throw new RuntimeException(e);
         }
     }
+
     JBrainTraining() throws IOException {
         numMetrics = NUM_PIECE_TYPES + 1 + board.getWidth() + 2 + board.getWidth() - 1 + board.getHeight();
 
