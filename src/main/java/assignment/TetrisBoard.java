@@ -21,6 +21,12 @@ public final class TetrisBoard implements Board {
 
     // Create an empty TetrisBoard
     public TetrisBoard(int width, int height) {
+        if (width < 0) {
+            throw new IllegalArgumentException("Width is out of bounds");
+        }
+        if (height < 0) {
+            throw new IllegalArgumentException("Height is out of bounds");
+        }
         this.width = width;
         this.height = height;
         this.maxHeight = 0;
@@ -242,7 +248,7 @@ public final class TetrisBoard implements Board {
     @Override
     public Board testMove(Action act) {
         if (act == null) {
-            return null;
+            throw new IllegalArgumentException("No Action Given");
         }
         Board newBoard = new TetrisBoard(this);
         newBoard.move(act);
@@ -295,7 +301,7 @@ public final class TetrisBoard implements Board {
     // checks whether a piece p can be placed in the given position
     // returns integer: 0 means it works, 1 means piece is out of bounds, 2 means piece intersects
     private int checkPiece(Piece p, Point position) {
-        if (p == null || position == null) return 2;
+        if (p == null || position == null) return 1;
 
         Point[] body = p.getBody();
         // make sure the piece is in bounds and does not intersect
@@ -325,7 +331,6 @@ public final class TetrisBoard implements Board {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                // TODO update based on piazza
                 if (this.board[i][j] == null) {
                     if (otherBoard.board[i][j] != null) {
                         return false;
@@ -365,11 +370,9 @@ public final class TetrisBoard implements Board {
     @Override
     public int getMaxHeight() { return this.maxHeight; }
 
-    // TODO copy method over and then redo this override method
     // determine the height at which a piece would rest if dropped at in a given column
     @Override
     public int dropHeight(Piece piece, int x) {
-        if (piece == null) return 0;
         int[] skirt = piece.getSkirt();
         int height = 0;
 
@@ -386,7 +389,9 @@ public final class TetrisBoard implements Board {
 
     // finds the height this piece will drop down to going dowm from this x position (assuming its the current piece)
     public int findDropHeight(Piece piece, int x) {
-        if (piece == null) return 0;
+        if (piece == null) {
+            throw new IllegalArgumentException("Current piece does not exist");
+        }
         int[] skirt = piece.getSkirt();
 
         // find the minimum value of the skirt, so that point can be placed at the bottom
@@ -419,13 +424,11 @@ public final class TetrisBoard implements Board {
 
     @Override
     public int getColumnHeight(int x) {
-        if (outOfBounds(x, 0)) return 0;
         return this.blocksFilledPerColumn[x];
     }
 
     @Override
     public int getRowWidth(int y) {
-        if (outOfBounds(0, y)) return 0;
         return this.blocksFilledPerRow[y];
     }
 
