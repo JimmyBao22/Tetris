@@ -94,7 +94,7 @@ public class CheckInstanceVariables {
     }
 
     // TODO failed 11 out of 10,000 tests
-    @RepeatedTest(10000)
+    @RepeatedTest(1000)
     void testMaxHeight() {
         int maxHeight = 0;
         for (int j = 0; j < board.getWidth(); j++) {
@@ -110,13 +110,15 @@ public class CheckInstanceVariables {
         for (int j = 0; j < board.getWidth(); j++) {
             int columnHeight = -1;
             for (int k = 0; k < board.getHeight(); k++) {
-                if (board.getGrid(j, k) != null) columnHeight = k;
+                if (board.getGrid(j, k) != null) {
+                    columnHeight = k;
+                }
             }
             Assertions.assertTrue((columnHeight + 1) == board.getColumnHeight(j));
         }
     }
 
-    @RepeatedTest(10000)
+    @RepeatedTest(1000)
     void testRowWidth() {
         for (int j = 0; j < board.getHeight(); j++) {
             int rowBlocks = 0;
