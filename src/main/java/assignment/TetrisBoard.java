@@ -1,6 +1,7 @@
 package assignment;
 
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * Represents a Tetris board -- essentially a 2D grid of piece types (or nulls). Supports
@@ -158,7 +159,7 @@ public final class TetrisBoard implements Board {
         for (int i = currentPiece.getHeight() - 1; i >= 0; i--) {
             int y = (int) (currentPosition.getY()) + i;
             // if this row is full
-            if (y >= 0 && y < getHeight() && (getRowWidth(y) == getWidth())) {
+            if (y >= 0 && (y < getHeight()) && (getRowWidth(y) == getWidth())) {
                 // replace every cell with the contents of the one above
                 for (int x = 0; x < getWidth(); x++) {
                     for (int row = y; row < getHeight() - 1; row++) {
@@ -190,22 +191,30 @@ public final class TetrisBoard implements Board {
         // checks if the drop height of the piece already equals the current piece's location. If it does,
         // that means the piece is placed.
         if (findDropHeight(currentPiece, (int)(currentPosition.getX())) == (int)(currentPosition.getY())) {
-            updateBlocksFilledAndMaxHeight(body);
             clearRows();
-            lastResult = Result.PLACE;
             currentPosition = null;
             currentPiece = null;
+            updateBlocksFilledAndMaxHeight();
+            lastResult = Result.PLACE;
         }
     }
 
     // updates the instance variables for max height and blocks filled per column/row
-    private void updateBlocksFilledAndMaxHeight(Point[] body) {
-        for (int i = 0; i < body.length; i++) {
-            int x = (int) (currentPosition.getX() + body[i].getX());
-            int y = (int) (currentPosition.getY() + body[i].getY());
-            blocksFilledPerColumn[x] = Math.max(getColumnHeight(x), y + 1);
-            maxHeight = Math.max(getMaxHeight(), y + 1);
-            blocksFilledPerRow[y]++;
+    private void updateBlocksFilledAndMaxHeight() {
+        maxHeight = 0;
+        Arrays.fill(blocksFilledPerRow, 0);
+        for (int x = 0; x < getWidth(); x++) {
+            blocksFilledPerColumn[x] = 0;
+            for (int y = 0; y < getHeight(); y++) {
+                if (getGrid(x, y) != null) {
+                    blocksFilledPerColumn[x] = (y + 1);
+                    blocksFilledPerRow[y]++;
+                }
+
+                if (blocksFilledPerColumn[x] > maxHeight) {
+                    maxHeight = blocksFilledPerColumn[x];
+                }
+            }
         }
     }
 
