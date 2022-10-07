@@ -113,18 +113,18 @@ public class WeightBrain implements Brain {
         for (int j = 0; j < NUM_PIECE_TYPES; j++) {
             metrics[i++] = 0;
         }
-        metrics[i++] = -20 * (newBoard.getMaxHeight() - currentBoard.getMaxHeight());               // max height
+        metrics[i++] = -20 * (newBoard.getMaxHeight() - currentBoard.getMaxHeight());             // max height
         for (int j = 0; j < newBoard.getWidth(); j++) {
-            metrics[i++] = -2 * (newBoard.getColumnHeight(j) - currentBoard.getColumnHeight(j)); // each column height
+            metrics[i++] = -2 * (newBoard.getColumnHeight(j) - currentBoard.getColumnHeight(j));  // each column height
         }
         metrics[i++] = -300 * (countHoles(newBoard) - countHoles(currentBoard));                  // number of holes
-        metrics[i++] = 50 * (newBoard.getRowsCleared() - currentBoard.getRowsCleared());         // number of rows cleared
+        metrics[i++] = 50 * (newBoard.getRowsCleared() - currentBoard.getRowsCleared());          // number of rows cleared
         for (int j = 1; j < newBoard.getWidth(); j++) {
             metrics[i++] = -1 * (columnHeightDiff(newBoard, currentBoard, j) * columnHeightDiff (newBoard, currentBoard, j)
                     * columnHeightDiff (newBoard, currentBoard, j));  // differences in row height
         }
 
-        findIntervals(newBoard, metrics, i);
+        findIntervals(newBoard, metrics, i);                                                      // number of open intervals
 
         return metrics;
     }

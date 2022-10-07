@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisPiece.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisPiece.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JTetrisBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JTetrisBrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,9 +55,22 @@
       <recent name="$PROJECT_DIR$/src/main/java/assignment" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.JBrainTraining">
+  <component name="RunManager" selected="Application.JTetrisBrain">
     <configuration name="JBrainTraining" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="assignment.JBrainTraining" />
+      <module name="prog4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JTetrisBrain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.JTetrisBrain" />
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -98,22 +114,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestBrain.testCountHoles" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="prog4" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="assignment.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.TestBrain" />
-      <option name="METHOD_NAME" value="testCountHoles" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TestBrain.testIntervals" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prog4" />
       <extension name="coverage">
@@ -132,11 +132,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.JTetrisBrain" />
         <item itemvalue="Application.JBrainTraining" />
         <item itemvalue="JUnit.TestBrain.testIntervals" />
         <item itemvalue="JUnit.TestBrain.testColumnHeightDifferences" />
         <item itemvalue="JUnit.TestBrain.testColumnHeightDiffs" />
-        <item itemvalue="JUnit.TestBrain.testCountHoles" />
       </list>
     </recent_temporary>
   </component>
@@ -387,7 +387,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665131081693</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Deleted unused code and moved weights file">
+      <created>1665155488101</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1665155488102</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -402,7 +409,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed rows not clearing correctly" />
     <MESSAGE value="Track number of rows cleared" />
     <MESSAGE value="Changed 1 comment" />
     <MESSAGE value="Implemented Rotations into brain" />
@@ -427,7 +433,8 @@
     <MESSAGE value="Completed most automatic tests" />
     <MESSAGE value="Started test brain and fixed code quality" />
     <MESSAGE value="Finished brain testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished brain testing" />
+    <MESSAGE value="Deleted unused code and moved weights file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Deleted unused code and moved weights file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
