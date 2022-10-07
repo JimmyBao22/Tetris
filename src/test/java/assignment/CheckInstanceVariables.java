@@ -15,9 +15,11 @@ public class CheckInstanceVariables {
     private static final int TOP_SPACE = 4;
     private static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
 
+    @Test
     TetrisBoard makeRandomBoard() {
         TetrisBoard newBoard;
-        outer: while (true) {
+        outer:
+        while (true) {
             newBoard = new TetrisBoard(WIDTH, HEIGHT + TOP_SPACE);
 
             // place 5 random blocks
@@ -29,11 +31,13 @@ public class CheckInstanceVariables {
                 int move = (int) (Math.random() * 10) - 5;
                 while (move < 0) {
                     newBoard.move(Board.Action.RIGHT);
+                    Assertions.assertEquals(newBoard.getLastAction(), Board.Action.RIGHT);
                     move++;
                 }
 
                 while (move > 0) {
                     newBoard.move(Board.Action.LEFT);
+                    Assertions.assertEquals(newBoard.getLastAction(), Board.Action.LEFT);
                     move--;
                 }
 
@@ -41,11 +45,11 @@ public class CheckInstanceVariables {
                     continue outer;
                 }
                 newBoard.move(Board.Action.DROP);
+                Assertions.assertEquals(newBoard.getLastAction(), Board.Action.DROP);
             }
 
             break;
         }
-
         return newBoard;
     }
     @BeforeEach
@@ -81,7 +85,6 @@ public class CheckInstanceVariables {
 
         Assertions.assertEquals(rotationIndex, piece.getRotationIndex());
 
-
         int moveCounterClockwise = (int) (Math.random() * 1000);
         for (int k = 0; k < moveCounterClockwise; k++) {
             piece = piece.counterclockwisePiece();
@@ -104,7 +107,6 @@ public class CheckInstanceVariables {
 
     @RepeatedTest(10000)
     void testColumnHeight() {
-        board = makeRandomBoard();
         for (int j = 0; j < board.getWidth(); j++) {
             int columnHeight = -1;
             for (int k = 0; k < board.getHeight(); k++) {
@@ -128,5 +130,11 @@ public class CheckInstanceVariables {
             // if rowblocks is width, the row should've cleared
             Assertions.assertTrue(rowBlocks != WIDTH);
         }
+    }
+
+    @Test
+    void testNoPiece() {
+        Board board = new TetrisBoard(10, 10);
+        Assertions.assertEquals(board.move(null), Board.Result.NO_PIECE);
     }
 }

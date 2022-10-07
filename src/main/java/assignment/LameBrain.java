@@ -20,6 +20,7 @@ public class LameBrain implements Brain {
         options = new ArrayList<>();
         firstMoves = new ArrayList<>();
         enumerateOptions(currentBoard);
+        System.out.println(options.size());
 
         int best = 0;
         int bestIndex = 0;
