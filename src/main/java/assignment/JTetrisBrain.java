@@ -2,7 +2,6 @@ package assignment;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 public class JTetrisBrain extends JTetris {
     private Brain brain;

@@ -1,9 +1,5 @@
 package assignment;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
-
 import java.awt.*;
 
 public class InvalidInputs {
