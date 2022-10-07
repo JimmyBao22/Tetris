@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/assignment/RotationMovementCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/assignment/RotationMovementCheck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weights4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/weights4.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,8 +45,9 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.CheckInstanceVariables.testColumnHeight">
-    <configuration name="CheckInstanceVariables.testColumnHeight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.RotationMovementCheck.testSkirtStick">
+    <configuration name="JBrainTraining3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.JBrainTraining3" />
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -54,31 +55,11 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.CheckInstanceVariables" />
-      <option name="METHOD_NAME" value="testColumnHeight" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CheckInstanceVariables.testRowWidth" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="prog4" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="assignment.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.CheckInstanceVariables" />
-      <option name="METHOD_NAME" value="testRowWidth" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RotationMovementCheck.testSpecificRotationRandom" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RotationMovementCheck.testSkirtDog" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -88,13 +69,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="assignment" />
       <option name="MAIN_CLASS_NAME" value="assignment.RotationMovementCheck" />
-      <option name="METHOD_NAME" value="testSpecificRotationRandom" />
+      <option name="METHOD_NAME" value="testSkirtDog" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RotationMovementCheck.testSpecificRotationStick" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RotationMovementCheck.testSkirtL" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -104,13 +85,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="assignment" />
       <option name="MAIN_CLASS_NAME" value="assignment.RotationMovementCheck" />
-      <option name="METHOD_NAME" value="testSpecificRotationStick" />
+      <option name="METHOD_NAME" value="testSkirtL" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RotationMovementCheck.testSpecificRotationT" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RotationMovementCheck.testSkirtStick" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -120,7 +101,23 @@
       </extension>
       <option name="PACKAGE_NAME" value="assignment" />
       <option name="MAIN_CLASS_NAME" value="assignment.RotationMovementCheck" />
-      <option name="METHOD_NAME" value="testSpecificRotationT" />
+      <option name="METHOD_NAME" value="testSkirtStick" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RotationMovementCheck.testSkirtT" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="prog4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="assignment" />
+      <option name="MAIN_CLASS_NAME" value="assignment.RotationMovementCheck" />
+      <option name="METHOD_NAME" value="testSkirtT" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -128,11 +125,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CheckInstanceVariables.testColumnHeight" />
-        <item itemvalue="JUnit.CheckInstanceVariables.testRowWidth" />
-        <item itemvalue="JUnit.RotationMovementCheck.testSpecificRotationRandom" />
-        <item itemvalue="JUnit.RotationMovementCheck.testSpecificRotationStick" />
-        <item itemvalue="JUnit.RotationMovementCheck.testSpecificRotationT" />
+        <item itemvalue="JUnit.RotationMovementCheck.testSkirtStick" />
+        <item itemvalue="JUnit.RotationMovementCheck.testSkirtT" />
+        <item itemvalue="JUnit.RotationMovementCheck.testSkirtDog" />
+        <item itemvalue="JUnit.RotationMovementCheck.testSkirtL" />
+        <item itemvalue="Application.JBrainTraining3" />
       </list>
     </recent_temporary>
   </component>
@@ -334,7 +331,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665097386681</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Errors">
+      <created>1665098692007</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1665098692010</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -372,7 +376,8 @@
     <MESSAGE value="Checked tests and fixed equals method in tetris board" />
     <MESSAGE value="Added improved brain training and fixed bugs in board" />
     <MESSAGE value="Added tests to check rotations" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added tests to check rotations" />
+    <MESSAGE value="Errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Errors" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -385,11 +390,6 @@
           <properties class="junit.framework.AssertionFailedError" package="junit.framework" />
           <option name="timeStamp" value="6" />
         </breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java</url>
-          <line>114</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

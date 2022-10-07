@@ -95,6 +95,67 @@ public class RotationMovementCheck {
     }
 
     @Test
+    void testRotationL() {
+        int width = 2;
+        int height = 2;
+        Point[] before = new Point[] { new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(0, 2) };
+        /*
+
+            x - -   ->   - x x  ->  - - -   ->  - x -
+            x x x   ->   - x -  ->  x x x   ->  - x -
+            - - -   ->   - x -  ->  - - x   ->  x x -
+
+         */
+
+        Point[] after = rotateClockwise(before, width, height);
+        Point[] supposedAfter = new Point[] { new Point(1, 2), new Point(1, 1), new Point(1, 0), new Point(2,2)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+
+        copyArray(before, after);
+        after = rotateClockwise(before, width, height);
+        supposedAfter = new Point[] { new Point(2, 1), new Point(1, 1), new Point(0, 1), new Point(2,0)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+
+        copyArray(before, after);
+        after = rotateClockwise(before, width, height);
+        supposedAfter = new Point[] { new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(0,0)};
+        for (int i = 0 ; i < 4; i++) {
+            Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+    }
+
+    @Test
+    void testSkirtL() {
+        Piece piece = new TetrisPiece(Piece.PieceType.LEFT_L);
+        int[] skirt = new int[]{1, 1, 1};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+
+        piece = piece.clockwisePiece();
+        skirt = new int[]{Integer.MAX_VALUE, 0, 2};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+
+        piece = piece.clockwisePiece();
+        skirt = new int[]{1, 1, 0};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+
+        piece = piece.clockwisePiece();
+        skirt = new int[]{0, 0, Integer.MAX_VALUE};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+    }
+
+    @Test
     void testSpecificRotationDog() {
         int width = 2;
         int height = 2;
@@ -125,6 +186,33 @@ public class RotationMovementCheck {
         supposedAfter = new Point[] { new Point(1, 0), new Point(1, 1), new Point(0, 1), new Point(0,2)};
         for (int i = 0 ; i < 4; i++) {
             Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+    }
+
+    @Test
+    void testSkirtDog() {
+        Piece piece = new TetrisPiece(Piece.PieceType.RIGHT_DOG);
+        int[] skirt = new int[]{1, 1, 2};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+
+        piece = piece.clockwisePiece();
+        skirt = new int[]{Integer.MAX_VALUE, 1, 0};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+
+        piece = piece.clockwisePiece();
+        skirt = new int[]{0, 0, 1};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+
+        piece = piece.clockwisePiece();
+        skirt = new int[]{1, 0, Integer.MAX_VALUE};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
         }
     }
 
@@ -163,6 +251,33 @@ public class RotationMovementCheck {
     }
 
     @Test
+    void testSkirtT() {
+        Piece piece = new TetrisPiece(Piece.PieceType.T);
+        int[] skirt = new int[]{1, 1, 1};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+
+        piece = piece.clockwisePiece();
+        skirt = new int[]{Integer.MAX_VALUE, 0, 1};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+
+        piece = piece.clockwisePiece();
+        skirt = new int[]{1, 0, 1};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+
+        piece = piece.clockwisePiece();
+        skirt = new int[]{1, 0, Integer.MAX_VALUE};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+    }
+
+    @Test
     void testSpecificRotationStick() {
         int width = 3;
         int height = 3;
@@ -194,6 +309,33 @@ public class RotationMovementCheck {
         supposedAfter = new Point[] { new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(1,3)};
         for (int i = 0 ; i < 4; i++) {
             Assertions.assertTrue(after[i].equals(supposedAfter[i]));
+        }
+    }
+
+    @Test
+    void testSkirtStick() {
+        Piece piece = new TetrisPiece(Piece.PieceType.STICK);
+        int[] skirt = new int[]{2, 2, 2, 2};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+
+        piece = piece.clockwisePiece();
+        skirt = new int[]{Integer.MAX_VALUE, Integer.MAX_VALUE, 0, Integer.MAX_VALUE};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+
+        piece = piece.clockwisePiece();
+        skirt = new int[]{1, 1, 1, 1};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
+        }
+
+        piece = piece.clockwisePiece();
+        skirt = new int[]{Integer.MAX_VALUE, 0, Integer.MAX_VALUE, Integer.MAX_VALUE};
+        for (int i = 0 ; i < skirt.length; i++) {
+            Assertions.assertEquals(skirt[i], piece.getSkirt()[i]);
         }
     }
 
