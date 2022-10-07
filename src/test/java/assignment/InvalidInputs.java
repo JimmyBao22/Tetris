@@ -26,8 +26,6 @@ public class InvalidInputs {
 
     private static void negativeBoardCreatioin() {
 //        Board board = new TetrisBoard(-1, 2);
-//        Board board = new TetrisBoard(0, 2);
-//        Board board = new TetrisBoard(2, 0);
         Board board = new TetrisBoard(2, -1);
     }
 

@@ -10,7 +10,6 @@ import java.util.Arrays;
  */
 public final class TetrisBoard implements Board {
 
-    // JTetris will use this constructor
     private int width, height, maxHeight, rowsCleared;
     private Piece[][] board;
     private int[] blocksFilledPerRow, blocksFilledPerColumn;
@@ -21,10 +20,10 @@ public final class TetrisBoard implements Board {
 
     // Create an empty TetrisBoard
     public TetrisBoard(int width, int height) {
-        if (width <= 0) {
+        if (width < 0) {
             throw new IllegalArgumentException("Width is not a positive integer");
         }
-        if (height <= 0) {
+        if (height < 0) {
             throw new IllegalArgumentException("Height is not a positive integer");
         }
         this.width = width;
@@ -181,7 +180,7 @@ public final class TetrisBoard implements Board {
     // check if the piece can be placed
     private void checkIfPiecePlaced(Point[] body) {
         // checks if the drop height of the piece already equals the current piece's location. If it does,
-        // that means the piece is placed.
+            // that means the piece is placed.
         if (findDropHeight(currentPiece, (int)(currentPosition.getX())) == (int)(currentPosition.getY())) {
             setPiece(currentPiece, body, currentPosition);
             updateBlocksFilledAndMaxHeight();
@@ -201,6 +200,7 @@ public final class TetrisBoard implements Board {
             blocksFilledPerColumn[x] = 0;
             for (int y = 0; y < getHeight(); y++) {
                 if (getGrid(x, y) != null) {
+                    // there exists a block at these indices. Therefore, update accordingly
                     blocksFilledPerColumn[x] = (y + 1);
                     blocksFilledPerRow[y]++;
                 }
@@ -216,7 +216,6 @@ public final class TetrisBoard implements Board {
         int result = checkPiece(currentPiece, newPosition);
         if (result == 0) {
             // can place the piece in this new position
-
             currentPosition = newPosition;
 
             lastResult = Result.SUCCESS;
@@ -356,7 +355,7 @@ public final class TetrisBoard implements Board {
 
         for (int i = 0; i < skirt.length; i++) {
             // The drop height will depend on each element in the skirt array with the respective
-            // height the piece needs to go down at this index
+                // height the piece needs to go down at this index
             if (skirt[i] != Integer.MAX_VALUE && x+i < getWidth()) {
                 height = Math.max(getColumnHeight(x + i) - skirt[i], height);
             }
@@ -382,7 +381,7 @@ public final class TetrisBoard implements Board {
 
         for (int i = 0; i < skirt.length; i++) {
             // The drop height will depend on each element in the skirt array with the respective
-            // height the piece needs to go down at this index
+                // height the piece needs to go down at this index
             if (skirt[i] != Integer.MAX_VALUE) {
                 int y = (int) (currentPosition.getY() + skirt[i]);
 
@@ -408,22 +407,6 @@ public final class TetrisBoard implements Board {
     @Override
     public int getRowWidth(int y) {
         return this.blocksFilledPerRow[y];
-    }
-
-    // determine whether a point is on the current piece
-    private boolean isPointOnCurrentPiece(Point toCheck) {
-        if (currentPiece == null || currentPosition == null || toCheck == null) {
-            return false;
-        }
-
-        for (Point p : currentPiece.getBody()) {
-            Point realCurrentPoint = new Point((int) (p.getX() + currentPosition.getX()), (int) (p.getY() + currentPosition.getY()));
-            if (realCurrentPoint.equals(toCheck)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     // show the type of the piece at a certain location on the grid, not counting the current piece

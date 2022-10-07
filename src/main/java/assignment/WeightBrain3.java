@@ -76,6 +76,7 @@ public class WeightBrain3 implements Brain {
         }
     }
 
+    // check all three rotations and add them to the options list
     private void rotate(Board currentBoard) {
         Board rotate = currentBoard.testMove(Board.Action.CLOCKWISE);
         if (rotate.getLastResult() == Board.Result.SUCCESS) {
@@ -95,7 +96,7 @@ public class WeightBrain3 implements Brain {
         }
     }
 
-    // score, higher = better
+    // calculates a score based on current metrics. Higher score indicates a better choice
     private double scoreBoard(Board newBoard, Board currentBoard) {
         double[] metrics = returnMetrics(newBoard, currentBoard, weights.length);
         double score = 0;
@@ -109,10 +110,8 @@ public class WeightBrain3 implements Brain {
     private double[] returnMetrics(Board newBoard, Board currentBoard, int n) {
         double[] metrics = new double[n];
         int i = 0;
-        // int indexOfPieceType = newBoard.getCurrentPiece().getType().ordinal();
         // set the current piece to 1, otherwise to 0. Matters more for matrix rather than vector multiplication
         for (int j = 0; j < NUM_PIECE_TYPES; j++) {
-            // metrics[i++] = indexOfPieceType == j ? 1 : 0;
             metrics[i++] = 0;
         }
         metrics[i++] = -20 * (newBoard.getMaxHeight() - currentBoard.getMaxHeight());       // max height
@@ -126,6 +125,13 @@ public class WeightBrain3 implements Brain {
                     * columnHeight (newBoard, currentBoard, j));  // differences in row height
         }
 
+        findIntervals(newBoard, metrics, i);
+
+        return metrics;
+    }
+
+    // finds the number of open intervals within each row (including the beginnning and end)
+    private void findIntervals(Board newBoard, double[] metrics, int i) {
         for (int j = 0; j < newBoard.getHeight(); j++) {
             // # of open intervals in each row
             int count = 0;
@@ -145,15 +151,16 @@ public class WeightBrain3 implements Brain {
             if (newSpace) count++;
             metrics[i++] = -count;
         }
-
-        return metrics;
     }
 
+    // counts the absolute difference between the column height at j and j-1. Further, finds the difference
+        // of this value between the new board and the current board
     private int columnHeight(Board newBoard, Board currentBoard, int j) {
         return (Math.abs(newBoard.getColumnHeight(j) - newBoard.getColumnHeight(j-1))
                 - Math.abs(currentBoard.getColumnHeight(j) - currentBoard.getColumnHeight(j-1)));
     }
 
+    // counts the number of holes in the board
     private int countHoles(Board board) {
         int countHoles = 0;
         for (int i = 0; i < board.getWidth(); i++) {

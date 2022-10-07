@@ -16,7 +16,7 @@ public class JBrainTraining extends JTetris {
         startGame();
         while (board.getMaxHeight() <= HEIGHT) {
             // System.out.println("not done yet: " + board.getRowsCleared());
-            Thread.sleep(10);
+            Thread.sleep(1);
         }
         // now the game is stopped
         return count;
@@ -93,7 +93,7 @@ public class JBrainTraining extends JTetris {
             }
             weights = generateNewWeightsFromBestOldOnes(weights, bestBrainIndices);
 
-            printWeights();
+            // printWeights();
             System.out.println(numGenerations + 1 +" complete");
         }
 
@@ -187,14 +187,16 @@ public class JBrainTraining extends JTetris {
 
         weights = new double[NUM_AGENTS][numMetrics];
 
-        File f = new File(FILE_NAME);
-        if (f.exists()) {
-            // read from the file
-            weights = readFromFile();
-        } else {
-            // generate random weights
-            weights = makeRandomStartingWeights();
-        }
+//        File f = new File(FILE_NAME);
+//        if (f.exists()) {
+//            // read from the file
+//            weights = readFromFile();
+//        } else {
+//            // generate random weights
+//            weights = makeRandomStartingWeights();
+//        }
+
+        weights = makeRandomStartingWeights();
 
         timer = new javax.swing.Timer(DELAY, new ActionListener() {
             public void actionPerformed(ActionEvent e) {

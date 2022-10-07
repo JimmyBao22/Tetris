@@ -2,18 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f5b0ef67-77df-41d6-b519-5585acf9fcf7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/assignment/InvalidInputs.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/assignment/TestCustomBoards.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/assignment/TestBrain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetris.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/JTetris.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/prog4/assignment/TetrisBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JTetris.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JTetris.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JBrainTraining.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/JTetrisBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/JTetrisBrain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/LameBrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/LameBrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/SmartBrain.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/TetrisBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/assignment/CheckInstanceVariables.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/assignment/RotationMovementCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/assignment/RotationMovementCheck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/WeightBrain3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/assignment/InvalidInputs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/assignment/InvalidInputs.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,8 +57,9 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestCustomBoards.testPiecePlaced">
-    <configuration name="TestCustomBoards.testDropUnderCave" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.JBrainTraining3">
+    <configuration name="JBrainTraining" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.JBrainTraining" />
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -68,15 +67,12 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.TestCustomBoards" />
-      <option name="METHOD_NAME" value="testDropUnderCave" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestCustomBoards.testGridWithBlocks" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="JBrainTraining3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.JBrainTraining3" />
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -84,15 +80,12 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.TestCustomBoards" />
-      <option name="METHOD_NAME" value="testGridWithBlocks" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestCustomBoards.testPiecePlaced" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="JTetris" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.JTetris" />
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -100,15 +93,12 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.TestCustomBoards" />
-      <option name="METHOD_NAME" value="testPiecePlaced" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestCustomBoards.testRowClearing" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestBrain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.TestBrain" />
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -116,15 +106,11 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.TestCustomBoards" />
-      <option name="METHOD_NAME" value="testRowClearing" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestCustomBoards.testUpdates" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestBrain.run" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prog4" />
       <extension name="coverage">
         <pattern>
@@ -133,8 +119,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="assignment" />
-      <option name="MAIN_CLASS_NAME" value="assignment.TestCustomBoards" />
-      <option name="METHOD_NAME" value="testUpdates" />
+      <option name="MAIN_CLASS_NAME" value="assignment.TestBrain" />
+      <option name="METHOD_NAME" value="run" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -142,11 +128,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TestCustomBoards.testPiecePlaced" />
-        <item itemvalue="JUnit.TestCustomBoards.testUpdates" />
-        <item itemvalue="JUnit.TestCustomBoards.testGridWithBlocks" />
-        <item itemvalue="JUnit.TestCustomBoards.testRowClearing" />
-        <item itemvalue="JUnit.TestCustomBoards.testDropUnderCave" />
+        <item itemvalue="Application.JBrainTraining3" />
+        <item itemvalue="Application.TestBrain" />
+        <item itemvalue="JUnit.TestBrain.run" />
+        <item itemvalue="Application.JBrainTraining" />
+        <item itemvalue="Application.JTetris" />
       </list>
     </recent_temporary>
   </component>
@@ -376,7 +362,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665104265048</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Completed most automatic tests">
+      <created>1665121482077</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1665121482078</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -391,7 +384,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed piece duplication on spawn (checking whether a piece is equal to the current piece does not determine whether the point is on the current piece)" />
     <MESSAGE value="Implemented rotations and wall kicks" />
     <MESSAGE value="Fixed pieces not being placed all the way at the bottom" />
     <MESSAGE value="Fixed rows not clearing correctly" />
@@ -416,7 +408,8 @@
     <MESSAGE value="Added testing for skirt" />
     <MESSAGE value="Fixed clear row problem" />
     <MESSAGE value="Added error throwing to constructor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added error throwing to constructor" />
+    <MESSAGE value="Completed most automatic tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed most automatic tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
