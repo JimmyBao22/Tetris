@@ -34,6 +34,7 @@ public final class TetrisPiece implements Piece {
         return rotatedPoints;
     }
 
+    // pre-computer the bodies and skirts for each rotation of each piece
     private static final Map<PieceType, List<Piece>> rotationComputations = new HashMap<PieceType, List<Piece>>();
     static {
         for (PieceType pt : PieceType.values()) {
@@ -57,11 +58,12 @@ public final class TetrisPiece implements Piece {
     private final Point[] body;
     private final int[] skirt;
 
+    // construct a piece with the spawn orientation
     public TetrisPiece(PieceType type) {
         this(type, 0);
     }
 
-    // Utilized for lookup
+    // construct a piece with a specific orientation
     private TetrisPiece(PieceType type, int rotationIndex) {
         this.type = type;
         this.rotationIndex = rotationIndex;

@@ -186,6 +186,7 @@ public final class TetrisBoard implements Board {
             updateBlocksFilledAndMaxHeight();
             clearRows();
             updateBlocksFilledAndMaxHeight();
+
             currentPosition = null;
             currentPiece = null;
             lastResult = Result.PLACE;
