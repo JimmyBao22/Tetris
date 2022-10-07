@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.StringTokenizer;
 
 public class JBrainTraining extends JTetris {
@@ -16,20 +15,20 @@ public class JBrainTraining extends JTetris {
         startGame();
         while (board.getMaxHeight() <= HEIGHT) {
             // System.out.println("not done yet: " + board.getRowsCleared());
-            Thread.sleep(1);
+            Thread.sleep(10);
         }
         // now the game is stopped
         return count;
     }
 
-    private static final int NUM_AGENTS = 30;
+    private static final int NUM_AGENTS = 500;
     private static final int NUM_RUNS_PER_AGENT = 3;
-    private static final int NUM_GENERATIONS = 20;
+    private static final int NUM_GENERATIONS = 5;
     private static final int NUM_PIECE_TYPES = Piece.PieceType.values().length;
     private int numTopBrains;
     private static int numMetrics;
     private double[][] weights;
-    private static final String FILE_NAME = "weights.txt";
+    private static final String FILE_NAME = "weights5.txt";
 
     private double[][] makeRandomStartingWeights() {
         double[][] randomWeights = new double[NUM_AGENTS][numMetrics];
@@ -65,7 +64,7 @@ public class JBrainTraining extends JTetris {
             }
 
             // find the indices of top brains by median
-            numTopBrains = 5;
+            numTopBrains = 10;
             int[] bestBrainIndices = new int[numTopBrains];
             for (int i = 0; i < numTopBrains && i < NUM_AGENTS; i++) {
                 bestBrainIndices[i] = i;
@@ -93,7 +92,7 @@ public class JBrainTraining extends JTetris {
             }
             weights = generateNewWeightsFromBestOldOnes(weights, bestBrainIndices);
 
-            // printWeights();
+            printWeights();
             System.out.println(numGenerations + 1 +" complete");
         }
 
@@ -125,7 +124,7 @@ public class JBrainTraining extends JTetris {
         for (int j = 0; j < numTopBrains; j++) {
             for (int k = 0; k < numTopBrains; k++) {
                 if (j != k && i < NUM_AGENTS) {
-                    updatedWeights[i++] = reproductionCrossover(weights, j, k, 0.1);
+                    updatedWeights[i++] = reproductionCrossover(weights, j, k);
                 }
             }
         }
@@ -134,19 +133,19 @@ public class JBrainTraining extends JTetris {
             // note: indices can be same (design decision)
             int firstIndex = (int)(Math.random() * numTopBrains);
             int secondIndex = (int)(Math.random() * numTopBrains);
-            updatedWeights[i] = reproductionCrossover(weights, firstIndex, secondIndex, 0.4);
+            updatedWeights[i] = reproductionCrossover(weights, firstIndex, secondIndex);
         }
 
         return updatedWeights;
     }
 
-    private double[] reproductionCrossover(double[][] weights, int indexOne, int indexTwo, double randomFactor) {
+    private double[] reproductionCrossover(double[][] weights, int indexOne, int indexTwo) {
         // create a crossover between the weights of indexOne and indexTwo, with added randomness for a mutation
         double[] reproducedWeights = new double[numMetrics];
         double chooseOneProb = 0.75;
         for (int i = 0; i < numMetrics; i++) {
-            if (Math.random() < randomFactor) {
-                // with a randomFactor % chance, set it to a random variable
+            if (Math.random() < 0.1) {
+                // with a 10% chance, set it to a random variable
                 reproducedWeights[i] = Math.random();
             } else {
                 // with a chooseOneProb chance, choose the weight of index one
@@ -187,16 +186,14 @@ public class JBrainTraining extends JTetris {
 
         weights = new double[NUM_AGENTS][numMetrics];
 
-//        File f = new File(FILE_NAME);
-//        if (f.exists()) {
-//            // read from the file
-//            weights = readFromFile();
-//        } else {
-//            // generate random weights
-//            weights = makeRandomStartingWeights();
-//        }
-
-        weights = makeRandomStartingWeights();
+        File f = new File(FILE_NAME);
+        if (f.exists()) {
+            // read from the file
+            weights = readFromFile();
+        } else {
+            // generate random weights
+            weights = makeRandomStartingWeights();
+        }
 
         timer = new javax.swing.Timer(DELAY, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
